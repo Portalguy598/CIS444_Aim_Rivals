@@ -1,0 +1,24 @@
+.login-container {
+    background-color: orange;
+    border: 1px solid orange;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.input-text {
+    margin-bottom: 0;
+}
+
+.input {
+    position: relative;
+}
+
+#passwd-toggle {
+    position: absolute;
+    padding: 1px;
+}
+
+button {
+    border: 1px solid black;
+    margin: 0 1px;
+}

@@ -1,9 +1,10 @@
-import { useState } from 'react'
+//import { useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom';
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+//import reactLogo from './assets/react.svg'
+//import viteLogo from '/vite.svg'
 import './App.css'
 import Login from './pages/Login';
+//import app from './firebase';
 
 function App() {
   // original part of default app code, uncomment this if also uncommenting other code

@@ -1,4 +1,6 @@
 import './Mode.css';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase.tsx';
 // import { Modes } from '@/enums/Modes';
 
 const Modes = {'reaction' : 0, 'flicks' : 1, 'tracing' : 2};
@@ -17,7 +19,8 @@ function SelectMode()
 	
 	const logout = () =>
 	{
-		console.log('TODO do logout (probably should be an imported function?');
+		// when it is recognized that the user is signed out, they are automatically sent to the login page
+		signOut(auth);
 	}
 	
 	const openSettings = () =>

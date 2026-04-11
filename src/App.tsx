@@ -1,10 +1,12 @@
 //import { useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom';
+import { AuthProvider } from './AuthContext.tsx';
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 import './App.css'
 import Login from './pages/Login';
 import SelectMode from './pages/Mode';
+import ProtectedRoute from './ProtectedRoute';
 //import app from './firebase';
 
 function App() {
@@ -36,13 +38,19 @@ function App() {
       </p>
     Temporary Link to Login page, may want to make it the default page later (path='/')
     We can add other links to the pages you are working on here too*/}
-	  <Routes>
+    
+    {/* AuthProvider wraps everything to ensure that authentication works properly 
+        Be sure to place all components but the Login component within a ProtectedRoute Component*/}
+    <AuthProvider>
+      <Routes>
         <Route path='/login' element={<Login />} />
-		<Route path='/mode' element={<SelectMode />} />
+		    <Route path='/mode' element={<ProtectedRoute> <SelectMode /> </ProtectedRoute>} />
       </Routes>
 	
       <p><Link to='/login'>Test link to login page</Link></p>
-	  <p><Link to='/mode'>Test link to modes page</Link></p>
+	    <p><Link to='/mode'>Test link to modes page</Link></p>
+    </AuthProvider>
+	  
     </>
   )
 }

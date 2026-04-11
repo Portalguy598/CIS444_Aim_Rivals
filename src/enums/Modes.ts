@@ -1,7 +1,7 @@
-enum Modes {
+/*enum Modes {
 	reaction,
 	flicks,
 	tracing
 }
 
-export { Modes };
+export { Modes }; */

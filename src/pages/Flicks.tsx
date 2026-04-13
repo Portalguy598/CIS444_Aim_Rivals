@@ -16,10 +16,11 @@ const TARGET_PLACE_BOUNDARY = 0.3;
 const GAME_TIME = 30;
 const TICK_PERIOD = 1000;
 
-enum GameState {
-	NEW,
-	PLAYING,
-	COMPLETE
+// use object in place of enum
+const GameState = {
+	NEW: 0,
+	PLAYING: 1,
+	COMPLETE: 2
 }
 
 interface Target {
@@ -38,22 +39,23 @@ export default function FlicksGame()
 	let hits = useRef(0);
 	let score = useRef(0);
 	let gameState = useRef(GameState.NEW);
-	let targets = useRef([]);
+	let targets = useRef<Target []>([]);
 	
 	const [uiTimeLeft, setTimeLeft] = useState<number>(timeLeft.current);
 	const [uiClicks, setClicks] = useState<number>(clicks.current);
 	const [uiHits, setHits] = useState<number>(hits.current);
 	const [uiScore, setScore] = useState<number>(score.current);
-	const [uiGameState, setGameState] = useState<GameState>(gameState.current);
+	const [uiGameState, setGameState] = useState<number>(gameState.current);
 	const [uiTargets, setTargets] = useState<Target[]>(targets.current);
 	
-	let timerTicker: Interval = null;
+	// setInterval never returns a -1, so -1 will take the place of null
+	let timerTicker: ReturnType<typeof setInterval> = -1;
 	
 	const addTarget = (xPos: number, yPos: number) => {
 		console.log("New target at: " + xPos + ", " + yPos);
 		const id = Math.random();
 		const curTimeLeft = timeLeft.current;
-		const newTarget = { id, xPos, yPos, curTimeLeft };
+		const newTarget = { id: id, xPos: xPos, yPos: yPos, spawnTime: curTimeLeft };
 		
 		const curTargets = targets.current;
 		targets.current = [...curTargets, newTarget];
@@ -74,9 +76,9 @@ export default function FlicksGame()
 			foundCandidate = true;
 			
 			//Check if overlapping with existing target. Retry up to five times
-			for (existingTarget of targets.current)
+			for (const existingTarget of targets.current)
 			{
-				sqrDistance = (xPos - existingTarget.xPos) ** 2 + (yPos - existingTarget.yPos) ** 2
+				const sqrDistance = (xPos - existingTarget.xPos) ** 2 + (yPos - existingTarget.yPos) ** 2
 				if (sqrDistance < TARGET_PLACE_BOUNDARY) { foundCandidate = false; continue; };
 			}
 			
@@ -155,7 +157,8 @@ export default function FlicksGame()
 	
 	const doGameStart = () => {
 		console.log("Game starting");
-		if (timerTicker != null)
+		// if timerTicker !== -1, then it has been assigned an ID through setInterval
+		if (timerTicker !== -1)
 		{
 			clearInterval(timerTicker)
 		}

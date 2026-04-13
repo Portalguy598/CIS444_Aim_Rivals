@@ -1,15 +1,41 @@
 import './Mode.css';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase.tsx';
+
+import { useNavigate } from 'react-router-dom';
+
 // import { Modes } from '@/enums/Modes';
+
+import FlicksGame from './Flicks';
 
 const Modes = {'reaction' : 0, 'flicks' : 1, 'tracing' : 2};
 
 function SelectMode()
 {
+	const navigate = useNavigate();
+	
 	const runGameMode = (mode: string) =>
 	{
-		console.log(`TODO run game for mode ${Modes[mode as keyof typeof Modes]}`);
+		
+		switch (mode)
+		{
+			case 'reaction':
+				console.log('Reaction mode not implemented yet');
+				break;
+				
+			case 'flicks':
+				console.log('Switching to flicks mode');
+				navigate('/flicks');
+				break;
+				
+			case 'tracing':
+				console.log('Tracing mode not implemented yet');
+				break;
+				
+			default:
+				console.log('Invalid mode: ' + mode);
+				break;
+		}
 	}
 	
 	const openLeaderboard = (mode: string) =>

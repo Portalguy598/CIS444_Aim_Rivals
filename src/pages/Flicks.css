@@ -18,7 +18,7 @@
 	height: 100%;
 }
 
-.header {
+.pageHeader {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -53,7 +53,7 @@
 	background-color: grey;
 }
 
-#logout-button {
+#quit-button {
 	margin-right: auto;
 	background-color: #FF5050;
 }
@@ -63,52 +63,106 @@
 	background-color: #7070FF;
 }
 
-.bodyContainer {
+.gameContainer {
 	display: flex;
-	width: 100%;
-	height: 100%;
+	width: 80%;
+	height: 80%;
 	justify-content: center;
 	align-items: center;
 	
 	padding: 10px;
+	
+	border: 1px solid black;
+	border-radius: 1px;
+	
+	position: relative;
 }
 
-.modeStack {
+.gameHeader {
+	position: absolute;
+	display: flex;
+	width: 100%;
+	height: fit-content;
+	justify-content: space-between;
+	align-items: center;
+	top: 0px;
+	padding: 5px;
+}
+
+.gameHeaderText {
+	font-size: 2rem;
+	margin: 5px;
+}
+
+.timeLeftText {
+	
+}
+
+.scoreText {
+	
+}
+
+.hitsText {
+	
+}
+
+.targetContainer {
+	
+}
+
+.gameOverlay {
+	position: absolute;
 	display: flex;
 	flex-direction: column;
-	width: 25%;
-	height: 100%;
-	margin: auto;
-	padding: 10px;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
+	background: solid white;
+	
 	gap: 20px;
 }
 
-.modeTitle {
-	font-size: 2rem;
-	font-weight: 700;
-	height: 15px;
-}
-
-.modeImgContainer {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	width: 90%;
-	border: 2px solid black;
+.newGameOverlay {
 	
-	min-height: 150px;
 }
 
-.modeImg {
-	max-width: 100%;
+.newGameHeading {
+	font-size: 2.5rem;
+	margin: 10px;
 }
 
-.lbButton {
-	width: 90%;
-	height: 100px;
-	font-size: 1rem;
-	background-color: #90D090;
+.gameOverOverlay {
+	
 }
+
+.gameOverHeading {
+	
+}
+
+.gameOverScore {
+	font-size: 2.5rem;
+}
+
+.gameOverAccuracy {
+	font-size: 2rem;
+}
+
+.gameOverResetText {
+	font-size: 1.5rem;
+}
+
+.target {
+	position: absolute;
+	width: 125px;
+	height: 125px;
+	border-radius: 50%;
+	
+	background: radial-gradient(
+		circle,
+		#ff0000 0% 19.5%,
+		#ffffff 20.5% 39.5%,
+		#ff0000 40.5% 59.5%,
+		#ffffff 60.5% 79.5%,
+		#ff0000 80.5% 100%
+	);
+}
+

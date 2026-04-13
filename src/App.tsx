@@ -4,10 +4,14 @@ import { AuthProvider } from './AuthContext.tsx';
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 import './App.css'
-import Login from './pages/Login';
-import SelectMode from './pages/Mode';
 import ProtectedRoute from './ProtectedRoute';
 //import app from './firebase';
+
+//Pages
+import Login from './pages/Login';
+import SelectMode from './pages/Mode';
+import FlicksGame from './pages/Flicks';
+
 
 function App() {
   // original part of default app code, uncomment this if also uncommenting other code
@@ -45,6 +49,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login />} />
 		    <Route path='/mode' element={<ProtectedRoute> <SelectMode /> </ProtectedRoute>} />
+			<Route path='/flicks' element={<ProtectedRoute> <FlicksGame /> </ProtectedRoute>} />
       </Routes>
 	
       <p><Link to='/login'>Test link to login page</Link></p>

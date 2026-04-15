@@ -243,43 +243,49 @@ export default function FlicksGame()
 		}
 	}
 		
-	return (
-		<div className='container font-roboto'>
-			<div className='pageHeader'>
-				<h3 className='headerTitle'>Aim Rivals</h3>
-				<div className='headerButtonContainer'>
-					<button className='headerButton' id="quit-button" onClick={quitGame}>Quit Game</button>
-					<button className='headerButton' id="settings-button" onClick={openSettings}>Settings</button>
-				</div>
-			</div>
-			
-			<div className='gameContainer' onClick={() => onGameClick()}>
-				<div className='gameHeader'>
-					<div className='gameHeaderText timeLeftText'>Time: {uiTimeLeft}s</div>
-					<div className='gameHeaderText scoreText'>Score: {uiScore}</div>
-					<div className='gameHeaderText hitsText'>Hits: {uiHits}</div>
-				</div>
-				<div className='targetContainer'>
-					{uiTargets.map((target) => (
-						<div key={target.id} className='target' style={{left: `${target.xPos}%`, top: `${target.yPos}%` }} onClick={() => onTargetHit(target.id)}></div>
-					))}
-				</div>
-				
-				{(uiGameState === GameState.NEW) && (
-					<div className='gameOverlay newGameOverlay' onClick={doGameStart}>
-						<h1 className='newGameHeading'>Click to start playing</h1>
-					</div>
-				)}
-				
-				{(uiGameState === GameState.COMPLETE) && (
-					<div className='gameOverlay gameOverOverlay' onClick={doGameReset}>
-						<h1 className='gameOverHeading'>Game over!</h1>
-						<h3 className='gameOverScore'>You scored {uiScore} points</h3>
-						<h3 className='gameOverAccuracy'>You had {uiClicks > 0 ? 100 * uiHits / uiClicks : 0}% accuracy</h3>
-						<h3 className='gameOverResetText'>Click to reset</h3>
-					</div>
-				)}
-			</div>
-		</div>
-	);
+return (
+  <div className='container font-roboto'>
+    
+    <div className='header'>
+      <h3 className='headerTitle'>Aim Rivals</h3>
+      <div className='headerButtonContainer'>
+        <button className='headerButton' id="quit-button" onClick={quitGame}>Quit Game</button>
+        <button className='headerButton' id="settings-button" onClick={openSettings}>Settings</button>
+      </div>
+    </div>
+
+<div className="hudBar">
+  <span className="time">Time: {uiTimeLeft}s</span>
+  <span className="score">Score: {uiScore}</span>
+  <span className="hits">Hits: {uiHits}</span>
+</div>
+
+    <div className='gameContainer' onClick={onGameClick}>
+      
+      <div className='targetContainer'>
+        {uiTargets.map((target) => (
+          <div
+            key={target.id}
+            className='target'
+            style={{ left: `${target.xPos}%`, top: `${target.yPos}%` }}
+            onClick={() => onTargetHit(target.id)}
+          />
+        ))}
+      </div>
+
+      {uiGameState === GameState.NEW && (
+        <div className='gameOverlay' onClick={doGameStart}>
+          <h1>Click to start</h1>
+        </div>
+      )}
+
+      {uiGameState === GameState.COMPLETE && (
+        <div className='gameOverlay' onClick={doGameReset}>
+          <h1>Game over</h1>
+        </div>
+      )}
+
+    </div>
+  </div>
+);
 }

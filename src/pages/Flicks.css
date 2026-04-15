@@ -1,56 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-#root {
-	width: 100vw;
-	height: 100vh;
-}
-
-.font-roboto {
-	font-family: 'Roboto', sans-serif;
-}
-
 .container {
+	width: 100%;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 100%;
 }
 
-.pageHeader {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100%;
-	height: 5%;
-	padding: 10px;
-}
-
-.headerTitle {
-	font-size: 1.25rem;
-	font-weight: 500;
-	margin: 2px;
-}
-
-.headerButtonContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	
-	width: 100%
-}
-
-.headerButton {
-	height: 25px;
-	width: 60px;
-	margin: 5px;
-	margin-top: 2px;
-	
-	font-size: 0.5rem;
-	border: 1px solid black;
-	border-radius: 3px;
-	background-color: grey;
+body {
+  margin: 0;
 }
 
 #quit-button {
@@ -64,22 +20,28 @@
 }
 
 .gameContainer {
-	display: flex;
-	width: 80%;
-	height: 80%;
-	justify-content: center;
-	align-items: center;
-	
-	padding: 10px;
-	
-	border: 1px solid black;
-	border-radius: 1px;
-	
-	position: relative;
+  width: 95vw;          
+  height: 75vh;         
+
+  margin: 0 auto;       
+
+  position: relative;
+
+  border: 2px solid black;
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  display: block;
 }
 
 .gameHeader {
 	position: absolute;
+
+	top: 0;
+	left: 0;
+	right: 0;
+
 	display: flex;
 	width: 100%;
 	height: fit-content;
@@ -87,6 +49,9 @@
 	align-items: center;
 	top: 0px;
 	padding: 5px;
+
+	z-index: 20; 
+	pointer-events: none; 
 }
 
 .gameHeaderText {
@@ -107,18 +72,26 @@
 }
 
 .targetContainer {
-	
 }
 
 .gameOverlay {
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background: solid white;
-	
-	gap: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: solid white;
+  color: white;
+
+  z-index: 10;
+  cursor: pointer;
 }
 
 .newGameOverlay {
@@ -150,12 +123,39 @@
 	font-size: 1.5rem;
 }
 
+.hudBar {
+  position: relative;
+  width: 100%;
+  height: 50px;
+
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.time {
+  position: absolute;
+  left: 20px;
+}
+
+.score {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hits {
+  position: absolute;
+  right: 20px;
+}
+
+
 .target {
 	position: absolute;
 	width: 125px;
 	height: 125px;
 	border-radius: 50%;
-	
+	z-index: 1;
+
 	background: radial-gradient(
 		circle,
 		#ff0000 0% 19.5%,

@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 
 import { signOut } from 'firebase/auth';
-import { auth } from '../firebase.tsx';
+import { auth, db } from '../firebase.tsx';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { useAuth } from '../AuthContext.tsx';
 import SelectMode from './Mode';
 
 import './Flicks.css';
@@ -32,6 +33,9 @@ interface Target {
 
 export default function FlicksGame()
 {
+	// get current user for data storage purposes
+	const { user } = useAuth();
+	
 	const navigate = useNavigate();
 	
 	let timeLeft = useRef(GAME_TIME);
@@ -194,8 +198,31 @@ export default function FlicksGame()
 		submitScore();
 	}
 	
-	const submitScore = () => {
-		console.log('TODO connect to Firestore')
+	const submitScore = async () => {
+		if(user){
+			console.log('made it into submitScore');
+			// get current stored score to compare to the new one
+			const docRef = doc(db, 'users', user.uid);
+			const docSnap = await getDoc(docRef);
+			if(!docSnap.exists()){
+				console.error('Could not get snapshot of document to upload data for flick game');
+			}
+			const data = docSnap.data();
+			let savedScore = null;
+			if(data){
+				savedScore = data.flick_score;
+			}
+
+			// if there is a new high score, update the document
+			if(score.current > savedScore){
+				try {
+					await updateDoc(docRef, {flick_score: score.current});
+					alert('New high score of ' + score.current + ' has been saved!');
+				} catch (error){
+					console.error('Error updating score: ', error);
+				}
+			}
+		}
 	}
 	
 	const decrementTimer = () => {

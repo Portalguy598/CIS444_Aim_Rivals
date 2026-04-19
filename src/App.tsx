@@ -53,9 +53,9 @@ function App() {
         <Route path='/login' element={<Login />} />
 		    <Route path='/mode' element={<ProtectedRoute> <SelectMode /> </ProtectedRoute>} />
 			  <Route path='/flicks' element={<ProtectedRoute> <FlicksGame /> </ProtectedRoute>} />
-        <Route path='/flicks-leaderboard' element={<ProtectedRoute> <FlicksLeaderboard></FlicksLeaderboard> </ProtectedRoute>} />
-        <Route path='/reaction-leaderboard' element={<ProtectedRoute> <ReactionLeaderboard></ReactionLeaderboard> </ProtectedRoute>} />
-        <Route path='/tracing-leaderboard' element={<ProtectedRoute> <TracingLeaderboard></TracingLeaderboard> </ProtectedRoute>} />
+        <Route path='/flicks-leaderboard' element={<ProtectedRoute> <FlicksLeaderboard /> </ProtectedRoute>} />
+        <Route path='/reaction-leaderboard' element={<ProtectedRoute> <ReactionLeaderboard /> </ProtectedRoute>} />
+        <Route path='/tracing-leaderboard' element={<ProtectedRoute> <TracingLeaderboard /> </ProtectedRoute>} />
       </Routes>
 	
       <p><Link to='/login'>Test link to login page</Link></p>

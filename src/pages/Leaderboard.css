@@ -1,0 +1,14 @@
+.leaderboard-window {
+    margin: 0 auto;
+    width: fit-content;
+    background-color: orange;
+    border: 1px solid orange;
+    border-radius: 10px;
+    padding: 10px;
+
+}
+
+.leaderboard-display {
+    display: flex;
+    justify-content: center;
+}

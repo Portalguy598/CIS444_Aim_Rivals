@@ -11,6 +11,9 @@ import ProtectedRoute from './ProtectedRoute';
 import Login from './pages/Login';
 import SelectMode from './pages/Mode';
 import FlicksGame from './pages/Flicks';
+import FlicksLeaderboard from './pages/FlicksLeaderboard.tsx';
+import ReactionLeaderboard from './pages/ReactionLeaderboard.tsx';
+import TracingLeaderboard from './pages/TracingLeaderboard.tsx';
 
 
 function App() {
@@ -49,7 +52,10 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login />} />
 		    <Route path='/mode' element={<ProtectedRoute> <SelectMode /> </ProtectedRoute>} />
-			<Route path='/flicks' element={<ProtectedRoute> <FlicksGame /> </ProtectedRoute>} />
+			  <Route path='/flicks' element={<ProtectedRoute> <FlicksGame /> </ProtectedRoute>} />
+        <Route path='/flicks-leaderboard' element={<ProtectedRoute> <FlicksLeaderboard /> </ProtectedRoute>} />
+        <Route path='/reaction-leaderboard' element={<ProtectedRoute> <ReactionLeaderboard /> </ProtectedRoute>} />
+        <Route path='/tracing-leaderboard' element={<ProtectedRoute> <TracingLeaderboard /> </ProtectedRoute>} />
       </Routes>
 	
       <p><Link to='/login'>Test link to login page</Link></p>

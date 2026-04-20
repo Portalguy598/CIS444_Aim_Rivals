@@ -41,6 +41,24 @@ function SelectMode()
 	const openLeaderboard = (mode: string) =>
 	{
 		console.log(`TODO open leaderboard for mode ${Modes[mode as keyof typeof Modes]}`);
+		switch (mode)
+		{
+			case 'reaction':
+				console.log('Switching to reaction leaderboard');
+				navigate('/reaction-leaderboard');
+				break;
+			case 'flicks':
+				console.log('Switching to flicks leaderboard');
+				navigate('/flicks-leaderboard');
+				break;
+			case 'tracing':
+				console.log('Switching to tracing leaderboard');
+				navigate('/tracing-leaderboard');
+				break;
+			default:
+				console.log('Invalid leaderboard mode: ' + mode);
+				break;
+		}
 	}
 	
 	const logout = () =>

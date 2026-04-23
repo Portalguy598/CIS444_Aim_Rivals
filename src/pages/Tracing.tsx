@@ -74,23 +74,31 @@ export default function TraceGame()
 		
 	return (
 		<div className='container font-roboto'>
-			<div className='pageHeader'>
+			<div className='header'>
 				<h3 className='headerTitle'>Aim Rivals</h3>
 				<div className='headerButtonContainer'>
 					<button className='headerButton' id="quit-button" onClick={quitGame}>Quit Game</button>
 					<button className='headerButton' id="settings-button" onClick={openSettings}>Settings</button>
 				</div>
 			</div>
-			
+
+			<div className="hudBar">
+				<span className="time">
+					Time: {Math.ceil(gameLogic.uiTimeLeft)}s
+				</span>
+				<span className="score">
+					Score: {gameLogic.uiScore}
+				</span>
+				<span className="hits">
+					Hits: {gameLogic.uiHits}
+				</span>
+			</div>
+
 			<div className='gameContainer' onClick={() => onGameClick()}
 											onMouseDown={onMouseDown}
 											onMouseUp={onMouseUp}
 											onMouseLeave={onMouseUp}>
-				<div className='gameHeader'>
-					<div className='gameHeaderText timeLeftText'>Time: {Math.ceil(gameLogic.uiTimeLeft)}s</div>
-					<div className='gameHeaderText scoreText'>Score: {gameLogic.uiScore}</div>
-					<div className='gameHeaderText hitsText'>Hits: {gameLogic.uiHits}</div>
-				</div>
+				
 				<div className='targetContainer'>
 					{gameLogic.uiTargets.map((target) => (
 						<div key={target.id} className='target' style={{left: `${target.xPos}%`, top: `${target.yPos}%`, transform: `translate(${target.xOffset}cqb, ${target.yOffset}cqb)` }}

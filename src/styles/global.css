@@ -1,0 +1,82 @@
+/* Global Style */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  color: white;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+
+/* Shared header */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.headerTitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 5px;
+}
+
+.headerButtonContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.headerButton {
+  height: 30px;
+  width: 80px;
+  margin: 5px;
+  font-size: 0.7rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.hudBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hudBar span {
+  white-space: nowrap;
+}
+
+.divider {
+  margin: 0 16px;
+  opacity: 0.6;
+}
+
+
+/* Buttons global */
+button {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}

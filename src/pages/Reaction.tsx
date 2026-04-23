@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+//import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { signOut } from 'firebase/auth';
-import { auth, db } from '../firebase.tsx';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
+// import { signOut } from 'firebase/auth';
+// import { auth } from '../firebase.tsx';
+//import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../AuthContext.tsx';
-import SelectMode from './Mode';
+//import SelectMode from './Mode';
 
 import './Flicks.css';
 
@@ -19,19 +19,25 @@ const TARGET_PLACE_BOUNDARY = 0.3;
 const GAME_TIME = 30;
 const TICK_PERIOD = 1000;
 
-export default function FlicksGame()
+export default function ReactionGame()
 {
 	// get current user for data storage purposes
 	const { user } = useAuth();
 	
 	const navigate = useNavigate();
 
-	const gameLogic = new ReusableGameLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user, "flick_score");
-	
-	const logout = () => {
-		// when it is recognized that the user is signed out, they are automatically sent to the login page
-		signOut(auth);
+	// adding this to avoid error in reusable game logic constructor
+	if(user === null){
+		console.error('User was null in reaction game mode');
+		return;
 	}
+
+	const gameLogic = new ReusableGameLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user, "reaction_score");
+	
+	// const logout = () => {
+	// 	// when it is recognized that the user is signed out, they are automatically sent to the login page
+	// 	signOut(auth);
+	// }
 	
 	const openSettings = () => {
 		console.log('TODO open settings');

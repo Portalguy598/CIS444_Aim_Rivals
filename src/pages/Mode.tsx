@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 // import { Modes } from '@/enums/Modes';
 
-import FlicksGame from './Flicks';
+//import FlicksGame from './Flicks';
 
 const Modes = {'reaction' : 0, 'flicks' : 1, 'tracing' : 2};
 

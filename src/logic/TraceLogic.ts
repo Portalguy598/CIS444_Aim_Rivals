@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { ReusableGameLogic, GameState } from './ReusableGameLogic.ts';
 import type { Target } from './ReusableGameLogic.ts'
 import type { User } from 'firebase/auth';
-import { last } from 'firebase/firestore/pipelines';
+//import { last } from 'firebase/firestore/pipelines';
 
 export class TraceLogic extends ReusableGameLogic
 {

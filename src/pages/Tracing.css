@@ -169,5 +169,7 @@
 		#ffffff 60.5% 79.5%,
 		#ff0000 80.5% 100%
 	);
+
+	transition: transform 0.25s linear;
 }
 

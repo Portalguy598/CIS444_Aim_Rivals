@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase.tsx';
+import type { User } from 'firebase/auth';
 
 export const GameState = {
     NEW: 0,
@@ -13,42 +14,46 @@ export interface Target {
 	xPos: number;
 	yPos: number;
 	spawnTime: number;
+	xOffset: number;
+	yOffset: number;
+	offsetAngle: number;
 }
 
 export class ReusableGameLogic
 {
-    private readonly CULL_TARGET_AGE: number = 4;
-    private readonly BASE_POINTS_ON_HIT: number = 10;
-    private readonly TARGET_PLACE_PERIOD: number = 2;
-    private readonly TARGET_PLACE_ATTEMPTS: number = 5;
-    private readonly TARGET_PLACE_BOUNDARY: number = 0.3;
-    private readonly GAME_TIME: number = 30;
-    private readonly TICK_PERIOD: number = 1000;
+    protected readonly CULL_TARGET_AGE: number = 4;
+    protected readonly BASE_POINTS_ON_HIT: number = 10;
+    protected readonly TARGET_PLACE_PERIOD: number = 2;
+    protected readonly TARGET_PLACE_ATTEMPTS: number = 5;
+    protected readonly TARGET_PLACE_BOUNDARY: number = 1;
+    protected readonly GAME_TIME: number = 30;
+    protected readonly TICK_PERIOD: number = 1000;
 
-	private timeLeft: React.RefObject<number>;
-	private clicks: React.RefObject<number>;
-	private hits: React.RefObject<number>;
-	private score: React.RefObject<number>;
-	private gameState: React.RefObject<number>;
-	private targets: React.RefObject<Target []>;
-	private timerTicker: ReturnType<typeof setInterval>;
-	private enableTargetCulling: boolean;
+	protected timeLeft: React.RefObject<number>;
+	protected clicks: React.RefObject<number>;
+	protected hits: React.RefObject<number>;
+	protected score: React.RefObject<number>;
+	protected gameState: React.RefObject<number>;
+	protected targets: React.RefObject<Target []>;
+	protected timerTicker: ReturnType<typeof setInterval>;
+	protected lastTargetPlaceTime: React.RefObject<number>;
+	protected enableTargetCulling: boolean;
 
 	public readonly uiTimeLeft
-	private readonly setTimeLeft;
+	protected readonly setTimeLeft;
 	public readonly uiClicks
-	private readonly setClicks;
+	protected readonly setClicks;
 	public readonly uiHits
-	private readonly setHits;
+	protected readonly setHits;
 	public readonly uiScore
-	private readonly setScore;
+	protected readonly setScore;
 	public readonly uiGameState
-	private readonly setGameState;
+	protected readonly setGameState;
 	public readonly uiTargets
-	private readonly setTargets;
+	protected readonly setTargets;
 
-	private readonly user;
-	private readonly leaderboardField: string;
+	protected readonly user;
+	protected readonly leaderboardField: string;
 
     constructor(cullTargetAge: number, 
                 basePointsOnHit: number,
@@ -58,7 +63,7 @@ export class ReusableGameLogic
                 gameTime: number,
                 tickPeriodMs: number,
                 enableTargetCulling: boolean,
-				user: any,
+				user: User,
 				leaderboardField: string)
     {
         this.CULL_TARGET_AGE = cullTargetAge;
@@ -77,6 +82,7 @@ export class ReusableGameLogic
         this.gameState = useRef(GameState.NEW);
         this.targets = useRef<Target []>([]);
         this.timerTicker = -1;
+		this.lastTargetPlaceTime = useRef(Number.MAX_VALUE);
 
         this.enableTargetCulling = enableTargetCulling;
 
@@ -96,11 +102,28 @@ export class ReusableGameLogic
 		console.log("New target at: " + xPos + ", " + yPos);
 		const id = Math.random();
 		const curTimeLeft = this.timeLeft.current;
-		const newTarget = { id: id, xPos: xPos, yPos: yPos, spawnTime: curTimeLeft };
+		const angle = Math.random() * Math.PI * 2;
+		const newTarget = { id: id, xPos: xPos, yPos: yPos, spawnTime: curTimeLeft, xOffset: 0, yOffset: 0, offsetAngle: angle };
 		
 		const curTargets = this.targets.current;
 		this.targets.current = [...curTargets, newTarget];
 		this.setTargets(this.targets.current);
+	}
+
+	positionWithinBounds(proposedX: number, proposedY: number, margin: number)
+	{
+		const maxX = 100 - margin;
+		const minX = margin;
+
+		const maxY = 100 - margin;
+		const minY = margin;
+
+		console.log(`dbg: propX = ${proposedX} propY = ${proposedY}`)
+
+		if (proposedX < minX || proposedX > maxX) { return false; }
+		if (proposedY < minY || proposedY > maxY) { return false; }
+
+		return true;
 	}
 
     randomlyPlaceNewTarget()
@@ -113,8 +136,8 @@ export class ReusableGameLogic
 		let attempts = 0;
 		do
 		{
-			xPos = 100 * (Math.random() * 0.8) + 0.1; // range between 10% and 90%
-			yPos = 100 * (Math.random() * 0.8) + 0.1;
+			xPos = 100 * (Math.random() * 0.95) + 0.1; // range between 5% and 95%
+			yPos = 100 * (Math.random() * 0.95) + 0.1;
 			foundCandidate = true;
 			
 			//Check if overlapping with existing target. Retry up to five times
@@ -127,12 +150,15 @@ export class ReusableGameLogic
 		} while (attempts < this.TARGET_PLACE_ATTEMPTS && !foundCandidate);
 		
 		this.addTarget(xPos, yPos);
+		this.lastTargetPlaceTime.current = this.timeLeft.current;
 	}
 
     removeTarget(id: number)
     {
 		this.targets.current = this.targets.current.filter(target => target.id !== id);
 		this.setTargets(this.targets.current);
+
+		console.log("dbg: removed target with id " + id);
 	}
 
     purgeTargets()
@@ -156,6 +182,7 @@ export class ReusableGameLogic
 			else
 			{
 				changesMade = true;
+				console.log("dbg: culled target with id " + target.id);
 			}
 		}
 		
@@ -220,6 +247,7 @@ export class ReusableGameLogic
 		this.purgeTargets();
 		this.gameState.current = GameState.NEW;
 		this.setGameState(this.gameState.current);
+		this.lastTargetPlaceTime.current = Number.MAX_VALUE;
 	}
 
     doGameEnd()
@@ -241,7 +269,7 @@ export class ReusableGameLogic
 			const docSnap = await getDoc(docRef);
 			const propName = this.leaderboardField;
 			if(!docSnap.exists()){
-				console.error('Could not get snapshot of document to upload data for flick game');
+				console.error('Could not get snapshot of document to upload data for game');
 			}
 			const data = docSnap.data();
 			let savedScore = null;
@@ -263,23 +291,51 @@ export class ReusableGameLogic
 
     decrementTimer()
     {
-		this.timeLeft.current -= 1;
+		this.preTimerDecrementHook()
+
+		this.timeLeft.current -= (this.TICK_PERIOD / 1000);
 		this.setTimeLeft(this.timeLeft.current);
+
+		this.preTargetCullHook()
 		
         if (this.enableTargetCulling)
         {
 		    this.cullOldTargets();
         }
+
+		this.preTargetPlaceHook()
 		
-		if (this.timeLeft.current % this.TARGET_PLACE_PERIOD === 0)
+		if (this.lastTargetPlaceTime.current - this.timeLeft.current > this.TARGET_PLACE_PERIOD)
 		{
 			this.randomlyPlaceNewTarget();
 		}
+
+		this.postTargetPlaceHook()
 		
 		if (this.timeLeft.current <= 0)
 		{
 			clearInterval(this.timerTicker);
 			this.doGameEnd();
 		}
+	}
+
+	preTimerDecrementHook()
+	{
+		return //Used to call logic defined by derived types
+	}
+
+	preTargetCullHook()
+	{
+		return //Used to call logic defined by derived types
+	}
+
+	preTargetPlaceHook()
+	{
+		return //Used to call logic defined by derived types
+	}
+
+	postTargetPlaceHook()
+	{
+		return //Used to call logic defined by derived types
 	}
 }

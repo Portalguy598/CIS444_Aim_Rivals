@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 // import { Modes } from '@/enums/Modes';
 
-import FlicksGame from './Flicks';
+//import FlicksGame from './Flicks';
 
 const Modes = {'reaction' : 0, 'flicks' : 1, 'tracing' : 2};
 
@@ -29,7 +29,8 @@ function SelectMode()
 				break;
 				
 			case 'tracing':
-				console.log('Tracing mode not implemented yet');
+				console.log('Switching to tracing mode');
+				navigate('/trace');
 				break;
 				
 			default:

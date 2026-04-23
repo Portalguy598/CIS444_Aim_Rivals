@@ -1,8 +1,11 @@
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// import { signOut } from 'firebase/auth';
-// import { auth } from '../firebase.tsx';
+import { signOut } from 'firebase/auth';
+import { auth, db } from '../firebase.tsx';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../AuthContext.tsx';
+import SelectMode from './Mode';
 
 import './Flicks.css';
 
@@ -12,7 +15,7 @@ const CULL_TARGET_AGE = 4;
 const BASE_POINTS_ON_HIT = 10;
 const TARGET_PLACE_PERIOD = 2;
 const TARGET_PLACE_ATTEMPTS = 5;
-const TARGET_PLACE_BOUNDARY = 1;
+const TARGET_PLACE_BOUNDARY = 0.3;
 const GAME_TIME = 30;
 const TICK_PERIOD = 1000;
 
@@ -23,18 +26,12 @@ export default function FlicksGame()
 	
 	const navigate = useNavigate();
 
-	// adding this to avoid error in reusable game logic constructor
-	if(user === null){
-		console.error('User was null in flicks game mode');
-		return;
-	}
-
 	const gameLogic = new ReusableGameLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user, "flick_score");
 	
-	// const logout = () => {
-	// 	// when it is recognized that the user is signed out, they are automatically sent to the login page
-	// 	signOut(auth);
-	// }
+	const logout = () => {
+		// when it is recognized that the user is signed out, they are automatically sent to the login page
+		signOut(auth);
+	}
 	
 	const openSettings = () => {
 		console.log('TODO open settings');
@@ -72,7 +69,7 @@ export default function FlicksGame()
 			
 			<div className='gameContainer' onClick={() => onGameClick()}>
 				<div className='gameHeader'>
-					<div className='gameHeaderText timeLeftText'>Time: {Math.ceil(gameLogic.uiTimeLeft)}s</div>
+					<div className='gameHeaderText timeLeftText'>Time: {gameLogic.uiTimeLeft}s</div>
 					<div className='gameHeaderText scoreText'>Score: {gameLogic.uiScore}</div>
 					<div className='gameHeaderText hitsText'>Hits: {gameLogic.uiHits}</div>
 				</div>

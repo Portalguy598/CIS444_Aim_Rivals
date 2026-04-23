@@ -58,7 +58,7 @@ export class ReusableGameLogic
                 gameTime: number,
                 tickPeriodMs: number,
                 enableTargetCulling: boolean,
-				user,
+				user: any,
 				leaderboardField: string)
     {
         this.CULL_TARGET_AGE = cullTargetAge;

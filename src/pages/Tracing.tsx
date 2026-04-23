@@ -7,26 +7,28 @@ import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../AuthContext.tsx';
 import SelectMode from './Mode';
 
-import './Flicks.css';
+import './Tracing.css';
 
-import { ReusableGameLogic, GameState } from '../logic/ReusableGameLogic.ts';
+import { TraceLogic } from '../logic/TraceLogic.ts';
+import { GameState } from '../logic/ReusableGameLogic.ts';
+import type { Target } from '../logic/ReusableGameLogic.ts';
 
 const CULL_TARGET_AGE = 4;
-const BASE_POINTS_ON_HIT = 10;
-const TARGET_PLACE_PERIOD = 2;
+const BASE_POINTS_ON_HIT = 1;
+const TARGET_PLACE_PERIOD = 5;
 const TARGET_PLACE_ATTEMPTS = 5;
 const TARGET_PLACE_BOUNDARY = 1;
 const GAME_TIME = 30;
-const TICK_PERIOD = 1000;
+const TICK_PERIOD = 250;
 
-export default function FlicksGame()
+export default function TraceGame()
 {
 	// get current user for data storage purposes
 	const { user } = useAuth();
 	
 	const navigate = useNavigate();
 
-	const gameLogic = new ReusableGameLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user, "flick_score");
+	const gameLogic = new TraceLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user!!, "trace_score", 5, Math.PI / 8);
 	
 	const logout = () => {
 		// when it is recognized that the user is signed out, they are automatically sent to the login page
@@ -42,11 +44,11 @@ export default function FlicksGame()
 	}
 	
 	const onTargetHit = (targetID: number) => {
-		gameLogic.onTargetHit(targetID);
+		//gameLogic.onTargetHit(targetID);
 	}
 	
 	const onGameClick = () => {
-		gameLogic.onGameClick();
+		//gameLogic.onGameClick();
 	}
 	
 	const doGameStart = () => {
@@ -55,6 +57,22 @@ export default function FlicksGame()
 	
 	const doGameReset = () => {
 		gameLogic.doGameReset();
+	}
+
+	const onTargetHover = (target: Target) => {
+		gameLogic.onTargetHover(target);
+	}
+
+	const onTargetUnhover = (target: Target) => {
+		gameLogic.onTargetUnhover(target);
+	}
+
+	const onMouseDown = () => {
+		gameLogic.onMouseDown();
+	}
+
+	const onMouseUp = () => {
+		gameLogic.onMouseUp();
 	}
 		
 	return (
@@ -67,7 +85,10 @@ export default function FlicksGame()
 				</div>
 			</div>
 			
-			<div className='gameContainer' onClick={() => onGameClick()}>
+			<div className='gameContainer' onClick={() => onGameClick()}
+											onMouseDown={onMouseDown}
+											onMouseUp={onMouseUp}
+											onMouseLeave={onMouseUp}>
 				<div className='gameHeader'>
 					<div className='gameHeaderText timeLeftText'>Time: {Math.ceil(gameLogic.uiTimeLeft)}s</div>
 					<div className='gameHeaderText scoreText'>Score: {gameLogic.uiScore}</div>
@@ -75,7 +96,11 @@ export default function FlicksGame()
 				</div>
 				<div className='targetContainer'>
 					{gameLogic.uiTargets.map((target) => (
-						<div key={target.id} className='target' style={{left: `${target.xPos}%`, top: `${target.yPos}%` }} onClick={() => onTargetHit(target.id)}></div>
+						<div key={target.id} className='target' style={{left: `${target.xPos}%`, top: `${target.yPos}%`, transform: `translate(${target.xOffset}cqb, ${target.yOffset}cqb)` }}
+						onClick={() => onTargetHit(target.id)}
+						onMouseEnter={() => onTargetHover(target)}
+						onMouseLeave={() => onTargetUnhover(target)}
+						></div>
 					))}
 				</div>
 				

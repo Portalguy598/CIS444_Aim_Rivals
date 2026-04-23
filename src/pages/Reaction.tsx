@@ -15,7 +15,7 @@ const CULL_TARGET_AGE = 4;
 const BASE_POINTS_ON_HIT = 10;
 const TARGET_PLACE_PERIOD = 2;
 const TARGET_PLACE_ATTEMPTS = 5;
-const TARGET_PLACE_BOUNDARY = 1;
+const TARGET_PLACE_BOUNDARY = 0.3;
 const GAME_TIME = 30;
 const TICK_PERIOD = 1000;
 
@@ -69,7 +69,7 @@ export default function FlicksGame()
 			
 			<div className='gameContainer' onClick={() => onGameClick()}>
 				<div className='gameHeader'>
-					<div className='gameHeaderText timeLeftText'>Time: {Math.ceil(gameLogic.uiTimeLeft)}s</div>
+					<div className='gameHeaderText timeLeftText'>Time: {gameLogic.uiTimeLeft}s</div>
 					<div className='gameHeaderText scoreText'>Score: {gameLogic.uiScore}</div>
 					<div className='gameHeaderText hitsText'>Hits: {gameLogic.uiHits}</div>
 				</div>

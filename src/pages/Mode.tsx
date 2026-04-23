@@ -29,7 +29,8 @@ function SelectMode()
 				break;
 				
 			case 'tracing':
-				console.log('Tracing mode not implemented yet');
+				console.log('Switching to tracing mode');
+				navigate('/trace');
 				break;
 				
 			default:

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { auth, db } from './firebase.tsx';
-import { doc, getDoc, getDocs, collection, getCountFromServer, query, orderBy } from 'firebase/firestore';
-import { useAuth } from './AuthContext.tsx';
+import { db } from './firebase.tsx';
+import { getDocs, collection, getCountFromServer, query, orderBy } from 'firebase/firestore';
 
 
 

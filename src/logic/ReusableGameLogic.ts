@@ -269,7 +269,7 @@ export class ReusableGameLogic
 			const docSnap = await getDoc(docRef);
 			const propName = this.leaderboardField;
 			if(!docSnap.exists()){
-				console.error('Could not get snapshot of document to upload data for flick game');
+				console.error('Could not get snapshot of document to upload data for game');
 			}
 			const data = docSnap.data();
 			let savedScore = null;

@@ -1,11 +1,6 @@
-import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { signOut } from 'firebase/auth';
-import { auth, db } from '../firebase.tsx';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../AuthContext.tsx';
-import SelectMode from './Mode';
 
 import './Tracing.css';
 
@@ -30,10 +25,10 @@ export default function TraceGame()
 
 	const gameLogic = new TraceLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user!!, "trace_score", 5, Math.PI / 8);
 	
-	const logout = () => {
-		// when it is recognized that the user is signed out, they are automatically sent to the login page
-		signOut(auth);
-	}
+	// const logout = () => {
+	// 	// when it is recognized that the user is signed out, they are automatically sent to the login page
+	// 	signOut(auth);
+	// }
 	
 	const openSettings = () => {
 		console.log('TODO open settings');
@@ -45,6 +40,8 @@ export default function TraceGame()
 	
 	const onTargetHit = (targetID: number) => {
 		//gameLogic.onTargetHit(targetID);
+		// unused otherwise, should the above line be uncommented?
+		console.log('OnTargetHit called with ' + targetID);
 	}
 	
 	const onGameClick = () => {

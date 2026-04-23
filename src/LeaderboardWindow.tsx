@@ -94,8 +94,8 @@ function LeaderboardWindow({mode}: {mode: string}){
                     <tbody>
                         {// display up to 10 users on the currently selected page
                         users.slice((pageNum - 1) * 10, pageNum * 10).map((data, index) => (
-                        <tr key={index + 1}>
-                            <td>{index + 1}</td>
+                        <tr key={index + 1 + (10 * (pageNum - 1))}>
+                            <td>{index + 1 + (10 * (pageNum - 1))}</td>
                             <td>{data.username}</td>
                             <td>{data.score}</td>
                         </tr>

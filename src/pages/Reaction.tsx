@@ -9,24 +9,27 @@ import SelectMode from './Mode';
 
 import './Flicks.css';
 
-import { ReusableGameLogic, GameState } from '../logic/ReusableGameLogic.ts';
+import { GameState } from '../logic/ReusableGameLogic.ts';
+import { ReactionLogic } from '../logic/ReactionLogic.ts';
 
-const CULL_TARGET_AGE = 4;
+const CULL_TARGET_AGE = 0.55;
 const BASE_POINTS_ON_HIT = 10;
-const TARGET_PLACE_PERIOD = 2;
+const TARGET_PLACE_PERIOD = 1;
 const TARGET_PLACE_ATTEMPTS = 5;
 const TARGET_PLACE_BOUNDARY = 0.3;
 const GAME_TIME = 30;
-const TICK_PERIOD = 1000;
+const TICK_PERIOD = 100; //Needs to be fast so point allocation feels less discrete
+const GRACE_PERIOD = 0.250;
+const MIN_POINT_SCALE = 0.5;
 
-export default function FlicksGame()
+export default function ReactionGame()
 {
 	// get current user for data storage purposes
 	const { user } = useAuth();
 	
 	const navigate = useNavigate();
 
-	const gameLogic = new ReusableGameLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user, "flick_score");
+	const gameLogic = new ReactionLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user, "reaction_score", GRACE_PERIOD, MIN_POINT_SCALE);
 	
 	const logout = () => {
 		// when it is recognized that the user is signed out, they are automatically sent to the login page
@@ -69,7 +72,7 @@ export default function FlicksGame()
 			
 			<div className='gameContainer' onClick={() => onGameClick()}>
 				<div className='gameHeader'>
-					<div className='gameHeaderText timeLeftText'>Time: {gameLogic.uiTimeLeft}s</div>
+					<div className='gameHeaderText timeLeftText'>Time: {Math.ceil(gameLogic.uiTimeLeft)}s</div>
 					<div className='gameHeaderText scoreText'>Score: {gameLogic.uiScore}</div>
 					<div className='gameHeaderText hitsText'>Hits: {gameLogic.uiHits}</div>
 				</div>
@@ -89,7 +92,7 @@ export default function FlicksGame()
 					<div className='gameOverlay gameOverOverlay' onClick={doGameReset}>
 						<h1 className='gameOverHeading'>Game over!</h1>
 						<h3 className='gameOverScore'>You scored {gameLogic.uiScore} points</h3>
-						<h3 className='gameOverAccuracy'>You had {gameLogic.uiClicks > 0 ? 100 * gameLogic.uiHits / gameLogic.uiClicks : 0}% accuracy</h3>
+						<h3 className='gameOverAccuracy'>You had {(gameLogic.uiClicks > 0 ? 100 * gameLogic.uiHits / gameLogic.uiClicks : 0).toFixed(2)}% accuracy</h3>
 						<h3 className='gameOverResetText'>Click to reset</h3>
 					</div>
 				)}

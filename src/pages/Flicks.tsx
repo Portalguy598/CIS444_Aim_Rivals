@@ -1,7 +1,9 @@
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// import { signOut } from 'firebase/auth';
-// import { auth } from '../firebase.tsx';
+import { signOut } from 'firebase/auth';
+import { auth, db } from '../firebase.tsx';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../AuthContext.tsx';
 
 import './Flicks.css';
@@ -18,85 +20,135 @@ const TICK_PERIOD = 100;
 
 export default function FlicksGame()
 {
-	// get current user for data storage purposes
 	const { user } = useAuth();
-	
 	const navigate = useNavigate();
 
-	// adding this to avoid error in reusable game logic constructor
-	if(user === null){
+	if (user === null) {
 		console.error('User was null in flicks game mode');
-		return;
+		return <div>Loading...</div>;
 	}
 
-	const gameLogic = new ReusableGameLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user, "flick_score");
-	
-	// const logout = () => {
-	// 	// when it is recognized that the user is signed out, they are automatically sent to the login page
-	// 	signOut(auth);
-	// }
-	
+	const gameLogic = new ReusableGameLogic(
+		CULL_TARGET_AGE,
+		BASE_POINTS_ON_HIT,
+		TARGET_PLACE_PERIOD,
+		TARGET_PLACE_ATTEMPTS,
+		TARGET_PLACE_BOUNDARY,
+		GAME_TIME,
+		TICK_PERIOD,
+		true,
+		user,
+		"flick_score"
+	);
+
+	const [, forceUpdate] = useState(0);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			forceUpdate(x => x + 1);
+		}, 50);
+
+		return () => clearInterval(interval);
+	}, []);
+
 	const openSettings = () => {
 		console.log('TODO open settings');
-	}
-	
+	};
+
 	const quitGame = () => {
 		navigate('/mode');
-	}
-	
+	};
+
 	const onTargetHit = (targetID: number) => {
 		gameLogic.onTargetHit(targetID);
-	}
-	
+	};
+
 	const onGameClick = () => {
 		gameLogic.onGameClick();
-	}
-	
+	};
+
 	const doGameStart = () => {
 		gameLogic.doGameStart();
-	}
-	
+	};
+
 	const doGameReset = () => {
 		gameLogic.doGameReset();
-	}
-		
+	};
+
 	return (
 		<div className='container font-roboto'>
-			<div className='pageHeader'>
+
+			{}
+			<div className='header'>
 				<h3 className='headerTitle'>Aim Rivals</h3>
 				<div className='headerButtonContainer'>
-					<button className='headerButton' id="quit-button" onClick={quitGame}>Quit Game</button>
-					<button className='headerButton' id="settings-button" onClick={openSettings}>Settings</button>
+					<button className='headerButton' id="quit-button" onClick={quitGame}>
+						Quit Game
+					</button>
+					<button className='headerButton' id="settings-button" onClick={openSettings}>
+						Settings
+					</button>
 				</div>
 			</div>
-			
-			<div className='gameContainer' onClick={() => onGameClick()}>
-				<div className='gameHeader'>
-					<div className='gameHeaderText timeLeftText'>Time: {Math.ceil(gameLogic.uiTimeLeft)}s</div>
-					<div className='gameHeaderText scoreText'>Score: {gameLogic.uiScore}</div>
-					<div className='gameHeaderText hitsText'>Hits: {gameLogic.uiHits}</div>
-				</div>
+
+			{}
+			<div className="hudBar">
+				<span className="time">
+					Time: {Math.ceil(gameLogic.uiTimeLeft)}s
+				</span>
+				<span className="score">
+					Score: {gameLogic.uiScore}
+				</span>
+				<span className="hits">
+					Hits: {gameLogic.uiHits}
+				</span>
+			</div>
+
+			{/* GAME */}
+			<div className='gameContainer' onClick={onGameClick}>
+
 				<div className='targetContainer'>
 					{gameLogic.uiTargets.map((target) => (
-						<div key={target.id} className='target' style={{left: `${target.xPos}%`, top: `${target.yPos}%` }} onClick={() => onTargetHit(target.id)}></div>
+						<div
+							key={target.id}
+							className='target'
+							style={{
+								left: `${target.xPos}%`,
+								top: `${target.yPos}%`
+							}}
+							onClick={() => onTargetHit(target.id)}
+						/>
 					))}
 				</div>
-				
-				{(gameLogic.uiGameState === GameState.NEW) && (
+
+				{gameLogic.uiGameState === GameState.NEW && (
 					<div className='gameOverlay newGameOverlay' onClick={doGameStart}>
 						<h1 className='newGameHeading'>Click to start playing</h1>
 					</div>
 				)}
-				
-				{(gameLogic.uiGameState === GameState.COMPLETE) && (
+
+				{gameLogic.uiGameState === GameState.COMPLETE && (
 					<div className='gameOverlay gameOverOverlay' onClick={doGameReset}>
 						<h1 className='gameOverHeading'>Game over!</h1>
-						<h3 className='gameOverScore'>You scored {gameLogic.uiScore} points</h3>
-						<h3 className='gameOverAccuracy'>You had {gameLogic.uiClicks > 0 ? 100 * gameLogic.uiHits / gameLogic.uiClicks : 0}% accuracy</h3>
-						<h3 className='gameOverResetText'>Click to reset</h3>
+
+						<h3 className='gameOverScore'>
+							You scored {gameLogic.uiScore} points
+						</h3>
+
+						<h3 className='gameOverAccuracy'>
+							You had {gameLogic.uiClicks > 0
+								? (100 * gameLogic.uiHits / gameLogic.uiClicks).toFixed(1)
+								: 0}% accuracy
+						</h3>
+
+						<h3 className='gameOverResetText'>
+							Click to reset
+						</h3>
 					</div>
 				)}
+
 			</div>
+
 		</div>
 	);
 }

@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+//import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { signOut } from 'firebase/auth';
-import { auth, db } from '../firebase.tsx';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
+// import { signOut } from 'firebase/auth';
+// import { auth } from '../firebase.tsx';
+//import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../AuthContext.tsx';
-import SelectMode from './Mode';
+//import SelectMode from './Mode';
 
 import './Flicks.css';
 
@@ -28,13 +28,18 @@ export default function ReactionGame()
 	const { user } = useAuth();
 	
 	const navigate = useNavigate();
+	
+	if(user === null){
+		console.error('User was null in reaction game mode');
+		return;
+	}
 
 	const gameLogic = new ReactionLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user, "reaction_score", GRACE_PERIOD, MIN_POINT_SCALE);
 	
-	const logout = () => {
-		// when it is recognized that the user is signed out, they are automatically sent to the login page
-		signOut(auth);
-	}
+	// const logout = () => {
+	// 	// when it is recognized that the user is signed out, they are automatically sent to the login page
+	// 	signOut(auth);
+	// }
 	
 	const openSettings = () => {
 		console.log('TODO open settings');

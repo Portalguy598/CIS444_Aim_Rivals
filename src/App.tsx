@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import SelectMode from './pages/Mode';
 import FlicksGame from './pages/Flicks';
 import TraceGame from './pages/Tracing';
+import ReactionGame from './pages/Reaction';
 import FlicksLeaderboard from './pages/FlicksLeaderboard.tsx';
 import ReactionLeaderboard from './pages/ReactionLeaderboard.tsx';
 import TracingLeaderboard from './pages/TracingLeaderboard.tsx';
@@ -55,6 +56,7 @@ function App() {
 		    <Route path='/mode' element={<ProtectedRoute> <SelectMode /> </ProtectedRoute>} />
 			  <Route path='/flicks' element={<ProtectedRoute> <FlicksGame /> </ProtectedRoute>} />
         <Route path='/trace' element={<ProtectedRoute> <TraceGame /> </ProtectedRoute>} />
+        <Route path='/reaction' element={<ProtectedRoute> <ReactionGame /> </ProtectedRoute>} />
         <Route path='/flicks-leaderboard' element={<ProtectedRoute> <FlicksLeaderboard /> </ProtectedRoute>} />
         <Route path='/reaction-leaderboard' element={<ProtectedRoute> <ReactionLeaderboard /> </ProtectedRoute>} />
         <Route path='/tracing-leaderboard' element={<ProtectedRoute> <TracingLeaderboard /> </ProtectedRoute>} />

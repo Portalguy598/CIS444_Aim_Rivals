@@ -146,7 +146,8 @@ export class ReusableGameLogic
 				const sqrDistance = (xPos - existingTarget.xPos) ** 2 + (yPos - existingTarget.yPos) ** 2
 				if (sqrDistance < this.TARGET_PLACE_BOUNDARY) { foundCandidate = false; continue; };
 			}
-			
+
+			++attempts;
 		} while (attempts < this.TARGET_PLACE_ATTEMPTS && !foundCandidate);
 		
 		this.addTarget(xPos, yPos);

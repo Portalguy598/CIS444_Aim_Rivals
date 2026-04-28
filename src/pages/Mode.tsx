@@ -20,7 +20,8 @@ function SelectMode()
 		switch (mode)
 		{
 			case 'reaction':
-				console.log('Reaction mode not implemented yet');
+				console.log('Switching to reaction mode');
+				navigate('/reaction');
 				break;
 				
 			case 'flicks':

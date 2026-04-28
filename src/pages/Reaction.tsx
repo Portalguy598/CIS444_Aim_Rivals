@@ -41,10 +41,6 @@ export default function ReactionGame()
 	// 	signOut(auth);
 	// }
 	
-	const openSettings = () => {
-		console.log('TODO open settings');
-	}
-	
 	const quitGame = () => {
 		navigate('/mode');
 	}
@@ -71,7 +67,6 @@ export default function ReactionGame()
 				<h3 className='headerTitle'>Aim Rivals</h3>
 				<div className='headerButtonContainer'>
 					<button className='headerButton' id="quit-button" onClick={quitGame}>Quit Game</button>
-					<button className='headerButton' id="settings-button" onClick={openSettings}>Settings</button>
 				</div>
 			</div>
 			

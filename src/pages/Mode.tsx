@@ -4,10 +4,6 @@ import { auth } from '../firebase.tsx';
 
 import { useNavigate } from 'react-router-dom';
 
-// import { Modes } from '@/enums/Modes';
-
-//import FlicksGame from './Flicks';
-
 const Modes = {'reaction' : 0, 'flicks' : 1, 'tracing' : 2};
 
 function SelectMode()
@@ -69,10 +65,6 @@ function SelectMode()
 		signOut(auth);
 	}
 	
-	const openSettings = () =>
-	{
-		console.log('TODO open settings');
-	}
 		
 	return (
 		<div className='container font-roboto'>
@@ -80,7 +72,6 @@ function SelectMode()
 				<h3 className='headerTitle'>Aim Rivals</h3>
 				<div className='headerButtonContainer'>
 					<button className='headerButton' id="logout-button" onClick={logout}>Logout</button>
-					<button className='headerButton' id="settings-button" onClick={openSettings}>Settings</button>
 				</div>
 			</div>
 			

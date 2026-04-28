@@ -1,9 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { signOut } from 'firebase/auth';
-import { auth, db } from '../firebase.tsx';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../AuthContext.tsx';
 
 import './Flicks.css';
@@ -51,9 +47,6 @@ export default function FlicksGame()
 		return () => clearInterval(interval);
 	}, []);
 
-	const openSettings = () => {
-		console.log('TODO open settings');
-	};
 
 	const quitGame = () => {
 		navigate('/mode');
@@ -84,9 +77,6 @@ export default function FlicksGame()
 				<div className='headerButtonContainer'>
 					<button className='headerButton' id="quit-button" onClick={quitGame}>
 						Quit Game
-					</button>
-					<button className='headerButton' id="settings-button" onClick={openSettings}>
-						Settings
 					</button>
 				</div>
 			</div>

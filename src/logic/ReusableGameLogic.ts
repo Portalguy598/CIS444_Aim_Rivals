@@ -13,10 +13,13 @@ export interface Target {
 	id: number;
 	xPos: number;
 	yPos: number;
-	spawnTime: number;
+	spawnTime:number;
 	xOffset: number;
 	yOffset: number;
 	offsetAngle: number;
+
+	hitCount?: number;
+
 }
 
 export class ReusableGameLogic
@@ -76,7 +79,7 @@ export class ReusableGameLogic
 
 
         this.timeLeft = useRef(gameTime);
-        this.clicks = useRef(-1); //-1 because first click to start game counts
+        this.clicks = useRef(0); //-1 because first click to start game counts
         this.hits = useRef(0);
         this.score = useRef(0);
         this.gameState = useRef(GameState.NEW);
@@ -105,6 +108,7 @@ export class ReusableGameLogic
 		const angle = Math.random() * Math.PI * 2;
 		const newTarget = { id: id, xPos: xPos, yPos: yPos, spawnTime: curTimeLeft, xOffset: 0, yOffset: 0, offsetAngle: angle };
 		
+
 		const curTargets = this.targets.current;
 		this.targets.current = [...curTargets, newTarget];
 		this.setTargets(this.targets.current);
@@ -239,7 +243,7 @@ export class ReusableGameLogic
 		console.log("Game reset");
 		this.timeLeft.current = this.GAME_TIME;
 		this.setTimeLeft(this.timeLeft.current);
-		this.clicks.current = -1;
+		this.clicks.current = 0;
 		this.setClicks(this.clicks.current);
 		this.score.current = 0;
 		this.setScore(this.score.current);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext.tsx';
 
@@ -73,9 +73,9 @@ export default function FlicksGame()
 
 			{}
 			<div className='header'>
-				<h3 className='headerTitle'>Aim Rivals</h3>
+				<h3 className='arcadeTitle'>Aim Rivals</h3>
 				<div className='headerButtonContainer'>
-					<button className='headerButton' id="quit-button" onClick={quitGame}>
+					<button className='arcadeTitle' id="quit-button" onClick={quitGame}>
 						Quit Game
 					</button>
 				</div>
@@ -95,13 +95,13 @@ export default function FlicksGame()
 			</div>
 
 			{/* GAME */}
-			<div className='gameContainer' onClick={onGameClick}>
+			<div className='gameContainerFlicks' onClick={onGameClick}>
 
-				<div className='targetContainer'>
+				<div className='targetContainerFlicks'>
 					{gameLogic.uiTargets.map((target) => (
 						<div
 							key={target.id}
-							className='target'
+							className='targetFlicks'
 							style={{
 								left: `${target.xPos}%`,
 								top: `${target.yPos}%`
@@ -112,14 +112,20 @@ export default function FlicksGame()
 				</div>
 
 				{gameLogic.uiGameState === GameState.NEW && (
-					<div className='gameOverlay newGameOverlay' onClick={doGameStart}>
-						<h1 className='newGameHeading'>Click to start playing</h1>
-					</div>
-				)}
+	<div
+		className='gameOverlayFlicks'
+		onClick={(e) => {
+			e.stopPropagation();   // 👈 THIS IS THE FIX
+			doGameStart();
+		}}
+	>
+		<h1 className='newGameHeading'>Click to start playing</h1>
+	</div>
+)}
 
 				{gameLogic.uiGameState === GameState.COMPLETE && (
-					<div className='gameOverlay gameOverOverlay' onClick={doGameReset}>
-						<h1 className='gameOverHeading'>Game over!</h1>
+					<div className='gameOverlayFlicks' onClick={doGameReset}>
+						<h1 className='gameOverTitle'>Game over!</h1>
 
 						<h3 className='gameOverScore'>
 							You scored {gameLogic.uiScore} points

@@ -1,14 +1,141 @@
 .leaderboard-window {
     margin: 0 auto;
-    width: fit-content;
-    background-color: orange;
-    border: 1px solid orange;
-    border-radius: 10px;
-    padding: 10px;
+    width: min(500px, 90vw);
 
+    background: rgba(20, 20, 20, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 16px;
+    padding: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+    backdrop-filter: blur(8px);
+    color: white;
+
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
 .leaderboard-display {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* each row */
+.leaderboard-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.leaderboard-row:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.10);
+}
+
+/* rank styling */
+.leaderboard-rank {
+    font-weight: 700;
+    opacity: 0.8;
+    width: 40px;
+}
+
+/* username */
+.leaderboard-name {
+    flex: 1;
+    text-align: left;
+}
+
+/* score */
+.leaderboard-score {
+    font-weight: 600;
+    color: #ffd166;
+}
+
+.leaderboard-window button {
+    background: #ff7a18;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 8px 12px;
+    margin-top: 10px;
+
+    cursor: pointer;
+    font-weight: 600;
+
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.leaderboard-window button:hover {
+    background: #ff9a3c;
+    transform: translateY(-1px);
+}
+
+.leaderboard-window button:active {
+    transform: translateY(0px);
+}
+button {
+    background: #ff7a18;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 8px 12px;
+
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button:hover {
+    background: #ff9a3c;
+}
+
+.leaderboard-table td {
+    font-size: 1.2rem;
+}
+
+.leaderboard-table th {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.leaderboard-controls {
+    display: flex;
     justify-content: center;
+    gap: 16px; /* 👈 THIS is the real fix */
+    margin-top: 15px;
+}
+
+.rank-cell {
+    display: inline-block;
+    width: 70px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    white-space: pre; /* preserves spacing */
+}
+
+.rank-num {
+    min-width: 20px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* optional spacing so emoji doesn't shift layout */
+.rank-gold,
+.rank-silver,
+.rank-bronze {
+    display: flex;
+    gap: 4px;
+    align-items: center;
 }

@@ -1,6 +1,9 @@
 import './Mode.css';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase.tsx';
+import tracingImage from '../assets/CIS 444 Game Trace Icon.png';
+import flickImage from '../assets/CIS 444 Game Flick Icon.png';
+import reactionImage from '../assets/CIS 444 Game Reaction Icon.png';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -69,33 +72,33 @@ function SelectMode()
 	return (
 		<div className='container font-roboto'>
 			<div className='header'>
-				<h3 className='headerTitle'>Aim Rivals</h3>
+				<h3 className='gameTitle'>Aim Rivals</h3>
 				<div className='headerButtonContainer'>
-					<button className='headerButton' id="logout-button" onClick={logout}>Logout</button>
+					<button className='arcadeTitle' id="logout-button" onClick={logout}>Logout</button>
 				</div>
 			</div>
 			
 			<div className='bodyContainer'>
 				<div className='modeStack' id='mode-reaction-time-stack'>
-					<h2 className='modeTitle'>Reaction</h2>
+					<h2 className='arcadeTitle'>Reaction</h2>
 					<div className='modeImgContainer' onClick={() => runGameMode('reaction')}>
-						<img className="modeImg" src='FIXME' alt="Reaction Time Mode"></img>
+						<img className="modeImg" src={reactionImage} alt="Reaction Mode"></img>
 					</div>
 					<button className='lbButton' id='mode-reaction-time-lb-button' onClick={() => openLeaderboard('reaction')}>View Leaderboard</button>
 				</div>
 				
 				<div className='modeStack' id='mode-flicks-stack'>
-					<h2 className='modeTitle'>Flicks</h2>
+					<h2 className='arcadeTitle'>Flicks</h2>
 					<div className='modeImgContainer' onClick={() => runGameMode('flicks')}>
-						<img className="modeImg" src='FIXME' alt="Flicks Mode"></img>
+						<img className="modeImg" src={flickImage} alt="Flicks Mode"></img>
 					</div>
 					<button className='lbButton' id='mode-flicks-lb-button' onClick={() => openLeaderboard('flicks')}>View Leaderboard</button>
 				</div>
 				
 				<div className='modeStack' id='mode-tracing-stack'>
-					<h2 className='modeTitle'>Tracing</h2>
+					<h2 className='arcadeTitle'>Tracing</h2>
 					<div className='modeImgContainer' onClick={() => runGameMode('tracing')}>
-						<img className="modeImg" src='FIXME' alt="Tracing Mode"></img>
+						<img className="modeImg" src={tracingImage} alt="Tracing Mode"></img>
 					</div>
 					<button className='lbButton' id='mode-tracing-lb-button' onClick={() => openLeaderboard('tracing')}>View Leaderboard</button>
 				</div>

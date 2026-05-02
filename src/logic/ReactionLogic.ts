@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+//import React, { useRef } from 'react';
 
 import { ReusableGameLogic, GameState } from './ReusableGameLogic.ts';
-import type { Target } from './ReusableGameLogic.ts'
+//import type { Target } from './ReusableGameLogic.ts'
 import type { User } from 'firebase/auth';
 //import { last } from 'firebase/firestore/pipelines';
 
@@ -48,20 +48,27 @@ export class ReactionLogic extends ReusableGameLogic
         if (this.gameState.current !== GameState.PLAYING) { return; }
 		
 		console.log("Hit target");
+
 		this.hits.current += 1;
 		this.setHits(this.hits.current);
+
+        this.clicks.current += 1;
+        this.setClicks(this.clicks.current);
+
 		
 		//Adjust score depending on how fast they clicked
         const targetObj = this.targets.current.find(target => target.id === targetID);
+        
+
         if (targetObj != null)
         {
-            const targetAge = targetObj.spawnTime - this.timeLeft.current;
+            const targetAge = Math.max(0,this.CULL_TARGET_AGE - (this.timeLeft.current - targetObj.spawnTime)
+        );
             const calculatedScore = this.BASE_POINTS_ON_HIT * this.interpPointScale(targetAge);
             this.score.current += Math.floor(calculatedScore);
             this.setScore(this.score.current);
-
-            console.log(`INFO: Calculated score of ${Math.floor(calculatedScore)} for target with age ${targetAge}`);
         }
+
         else
         {
             console.log("ERROR: Could not get target reference to determine age for scoring!");

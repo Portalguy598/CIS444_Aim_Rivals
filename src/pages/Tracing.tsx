@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-
 import { useAuth } from '../AuthContext.tsx';
 
 import './Tracing.css';
@@ -14,108 +13,141 @@ const TARGET_PLACE_PERIOD = 5;
 const TARGET_PLACE_ATTEMPTS = 5;
 const TARGET_PLACE_BOUNDARY = 1;
 const GAME_TIME = 30;
-const TICK_PERIOD = 250;
+const TICK_PERIOD = 70;//250;
 
-export default function TraceGame()
-{
-	// get current user for data storage purposes
+export default function TraceGame() {
 	const { user } = useAuth();
-	
 	const navigate = useNavigate();
 
-	const gameLogic = new TraceLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user!!, "trace_score", 5, Math.PI / 8);
-	
-	// const logout = () => {
-	// 	// when it is recognized that the user is signed out, they are automatically sent to the login page
-	// 	signOut(auth);
-	// }
-	
+	const gameLogic = new TraceLogic(
+		CULL_TARGET_AGE,
+		BASE_POINTS_ON_HIT,
+		TARGET_PLACE_PERIOD,
+		TARGET_PLACE_ATTEMPTS,
+		TARGET_PLACE_BOUNDARY,
+		GAME_TIME,
+		TICK_PERIOD,
+		true,
+		user!!,
+		"trace_score",
+		5,
+		Math.PI / 8
+	);
+
 	const quitGame = () => {
 		navigate('/mode');
-	}
-	
-	const onTargetHit = (targetID: number) => {
-		//gameLogic.onTargetHit(targetID);
-		// unused otherwise, should the above line be uncommented?
+	};
+
+	const onTargetHit = (targetID: number) => {	
 		console.log('OnTargetHit called with ' + targetID);
-	}
-	
-	const onGameClick = () => {
-		//gameLogic.onGameClick();
-	}
-	
+	};
+
+	const onGameClick = () => {};
+
 	const doGameStart = () => {
 		gameLogic.doGameStart();
-	}
-	
+	};
+
 	const doGameReset = () => {
 		gameLogic.doGameReset();
-	}
+	};
 
 	const onTargetHover = (target: Target) => {
 		gameLogic.onTargetHover(target);
-	}
+	};
 
 	const onTargetUnhover = (target: Target) => {
 		gameLogic.onTargetUnhover(target);
-	}
+	};
 
 	const onMouseDown = () => {
+		
 		gameLogic.onMouseDown();
-	}
+	};
 
 	const onMouseUp = () => {
 		gameLogic.onMouseUp();
-	}
-		
+	};
+
 	return (
 		<div className='container font-roboto'>
 			<div className='header'>
-				<h3 className='headerTitle'>Aim Rivals</h3>
+				<h3 className='arcadeTitle'>Aim Rivals</h3>
 				<div className='headerButtonContainer'>
-					<button className='headerButton' id="quit-button" onClick={quitGame}>Quit Game</button>
+					<button className='arcadeTitle' id='quit-button' onClick={quitGame}>
+						Quit Game
+					</button>
 				</div>
 			</div>
 
-			<div className="hudBar">
-				<span className="time">
+			<div className='hudBar'>
+				<span className='time'>
 					Time: {Math.ceil(gameLogic.uiTimeLeft)}s
 				</span>
-				<span className="score">
+				<span className='score'>
 					Score: {gameLogic.uiScore}
 				</span>
-				<span className="hits">
+				<span className='hits'>
 					Hits: {gameLogic.uiHits}
 				</span>
 			</div>
 
-			<div className='gameContainer' onClick={() => onGameClick()}
-											onMouseDown={onMouseDown}
-											onMouseUp={onMouseUp}
-											onMouseLeave={onMouseUp}>
-				
-				<div className='targetContainer'>
+			<div
+				className='gameContainerTrace'
+				onMouseDown={onMouseDown}
+				onMouseUp={onMouseUp}
+				onMouseLeave={() => gameLogic.onMouseUp()}
+			>
+				<div className='targetContainerTrace'>
 					{gameLogic.uiTargets.map((target) => (
-						<div key={target.id} className='target' style={{left: `${target.xPos}%`, top: `${target.yPos}%`, transform: `translate(${target.xOffset}cqb, ${target.yOffset}cqb)` }}
-						onClick={() => onTargetHit(target.id)}
-						onMouseEnter={() => onTargetHover(target)}
-						onMouseLeave={() => onTargetUnhover(target)}
-						></div>
+						<div
+							key={target.id}
+							className= 'targetTrace'
+							style={{
+								left: `${target.xPos}%`,
+								top: `${target.yPos}%`,
+								transform: `translate(${target.xOffset}cqb, ${target.yOffset}cqb)`
+						}}
+						
+							onPointerDown={(e) => {e.stopPropagation(); onTargetHit(target.id);
+
+							}}
+							onPointerEnter={() => onTargetHover(target)}
+							onPointerLeave={() => onTargetUnhover(target)}
+						/>
 					))}
 				</div>
-				
-				{(gameLogic.uiGameState === GameState.NEW) && (
-					<div className='gameOverlay newGameOverlay' onClick={doGameStart}>
-						<h1 className='newGameHeading'>Click to start playing</h1>
+
+				{gameLogic.uiGameState === GameState.NEW && (
+					<div className='gameOverlayTrace' onClick={doGameStart}>
+						<h1 className='newGameHeading'>
+							Click to start playing
+						</h1>
 					</div>
 				)}
-				
-				{(gameLogic.uiGameState === GameState.COMPLETE) && (
-					<div className='gameOverlay gameOverOverlay' onClick={doGameReset}>
-						<h1 className='gameOverHeading'>Game over!</h1>
-						<h3 className='gameOverScore'>You scored {gameLogic.uiScore} points</h3>
-						<h3 className='gameOverAccuracy'>You had {gameLogic.uiClicks > 0 ? 100 * gameLogic.uiHits / gameLogic.uiClicks : 0}% accuracy</h3>
-						<h3 className='gameOverResetText'>Click to reset</h3>
+
+				{gameLogic.uiGameState === GameState.COMPLETE && (
+					<div className='gameOverlayTrace' onClick={doGameReset}>
+						<h1 className='gameOverTitle'>Game over!</h1>
+
+						<h3 className='gameOverScore'>
+							You scored {gameLogic.uiScore} points
+						</h3>
+
+						<h3 className='gameOverAccuracy'>
+							You had{' '}
+							{gameLogic.uiClicks === 0
+								? 0
+								: Math.round(
+										(100 * gameLogic.uiHits) /
+											gameLogic.uiClicks
+								  )}
+							% accuracy
+						</h3>
+
+						<h3 className='gameOverResetText'>
+							Click to reset
+						</h3>
 					</div>
 				)}
 			</div>

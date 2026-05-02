@@ -15,7 +15,7 @@ function Login(){
     const passwordRef = useRef<HTMLInputElement>(null);
 
 
-    // the below code is used to toggle between visible and hidden password states
+    // toggle between visible and hidden password states
     const [passwdVisibility, setPasswdVisibility] = useState('password');
     // this function gets placed into the onClick JSX handler
     const togglePassword = () => {
@@ -78,12 +78,12 @@ function Login(){
     };
 
     return (
-        <div className="container">
+        <div className="containerLogin">
             <h1>Aim Rivals</h1>
             <div className="login-container">
-                <div className="header">
-                    <h2 className="text">Log In or Create Account</h2>
-                    <div className="underline"></div>
+                <div className="headerLogin">
+                    <h2 className="textLogin">Log In or Create Account</h2>
+                    <div className="underlineLogin"></div>
                 </div>
                 <div className="inputs">
                     <div className="input">

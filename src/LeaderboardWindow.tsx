@@ -95,7 +95,19 @@ function LeaderboardWindow({mode}: {mode: string}){
                         {// display up to 10 users on the currently selected page
                         users.slice((pageNum - 1) * 10, pageNum * 10).map((data, index) => (
                         <tr key={index + 1 + (10 * (pageNum - 1))}>
-                            <td>{index + 1 + (10 * (pageNum - 1))}</td>
+                           <td>
+  <span className="rank-cell">
+    {(() => {
+      const rank = index + 1 + (10 * (pageNum - 1));
+
+      if (rank === 1) return "🥇1 ";
+      if (rank === 2) return "🥈2 ";
+      if (rank === 3) return "🥉3 ";
+
+      return rank.toString().padStart(3, "      ");
+    })()}
+  </span>
+</td>
                             <td>{data.username}</td>
                             <td>{data.score}</td>
                         </tr>

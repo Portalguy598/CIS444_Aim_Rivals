@@ -1,112 +1,100 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
-#root {
-	width: 100vw;
-	height: 100vh;
-}
-
-.font-roboto {
-	font-family: 'Roboto', sans-serif;
-}
-
-.container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 100%;
-}
-
-.pageHeader {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100%;
-	height: 5%;
-	padding: 10px;
-}
-
-.headerTitle {
-	font-size: 1.25rem;
-	font-weight: 500;
-	margin: 2px;
-}
-
-.headerButtonContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	
-	width: 100%
-}
-
-.headerButton {
-	height: 25px;
-	width: 60px;
-	margin: 5px;
-	margin-top: 2px;
-	
-	font-size: 0.5rem;
-	border: 1px solid black;
-	border-radius: 3px;
-	background-color: grey;
-}
-
 #quit-button {
 	margin-right: auto;
 	background-color: #FF5050;
 }
 
-#settings-button {
-	margin-left: auto;
-	background-color: #7070FF;
+#quit-button:hover {
+	background-color: #ff2f2f;
+	transform: scale(1.03);
+}
+/* ===================== Reaction ===================== */
+/*
+.gameContainerReact {
+		
+  width: min(1100px, 90vw);
+  height: min(650px, 80vh);
+
+  margin: 0 auto;
+
+  position: relative;
+
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+
+  overflow: hidden;
+
+  display: block;
+}
+*/
+.gameContainerReact {
+  position: relative;
+  overflow: hidden;
+  width: min(1100px, 90vw);
+  height: min(650px, 80vh);
+
+  margin: 0 auto;
+
+  position: relative;
+
+  border-radius: 12px;
+
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(to bottom,
+      #f8f8f8 0%,
+      #e6e6e6 45%,
+      #cfcfcf 100%
+    );
 }
 
-.gameContainer {
-	display: flex;
-	width: 80%;
-	height: 80%;
-	justify-content: center;
-	align-items: center;
-	
-	padding: 10px;
-	
-	border: 1px solid black;
-	border-radius: 1px;
-	
-	position: relative;
+.gameContainerReact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
+
+  background-size: 60px 60px;
+
+  transform:
+    perspective(800px)
+    rotateX(65deg)
+    translateY(20%);
+
+  transform-origin: bottom;
+
+  opacity: 0.35;
+
+  pointer-events: none;
 }
 
-.gameHeader {
-	position: absolute;
-	display: flex;
-	width: 100%;
-	height: fit-content;
-	justify-content: space-between;
-	align-items: center;
-	top: 0px;
-	padding: 5px;
+.gameContainerReact::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at center bottom,
+    transparent 0%,
+    rgba(0,0,0,0.15) 60%,
+    rgba(0,0,0,0.35) 100%
+  );
+
+  pointer-events: none;
 }
 
-.gameHeaderText {
-	font-size: 2rem;
-	margin: 5px;
-}
 
-.timeLeftText {
-	
-}
+/* ===================== Target Area ===================== */
 
-.scoreText {
-	
-}
-
-.hitsText {
-	
-}
-
-.targetContainer {
+.targetContainerReact {
 	position: absolute;
 	container-type: size;
 	width: 87.5%;
@@ -115,47 +103,9 @@
 	left: 0px;
 }
 
-.gameOverlay {
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background: solid white;
-	
-	gap: 20px;
-}
+/* ===================== Target ===================== */
 
-.newGameOverlay {
-	
-}
-
-.newGameHeading {
-	font-size: 2.5rem;
-	margin: 10px;
-}
-
-.gameOverOverlay {
-	
-}
-
-.gameOverHeading {
-	
-}
-
-.gameOverScore {
-	font-size: 2.5rem;
-}
-
-.gameOverAccuracy {
-	font-size: 2rem;
-}
-
-.gameOverResetText {
-	font-size: 1.5rem;
-}
-
-.target {
+.targetReact {
 	position: absolute;
 	width: 125px;
 	height: 125px;
@@ -171,3 +121,145 @@
 	);
 }
 
+
+/* ===================== Overlay ===================== */
+
+.gameHeaderReact {
+	position: absolute;
+
+	top: 0;
+	left: 0;
+	right: 0;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	padding: 5px;
+
+	z-index: 20;
+	pointer-events: none;
+}
+
+
+.gameOverlayReact {
+  font-family: "Orbitron", monospace;
+  
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+
+  z-index: 10;
+  cursor: pointer;
+}
+
+
+.gameOverTitle {
+  font-family: "Press Start 2P", monospace;
+
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  text-transform: uppercase;
+
+  color: #ff3b3b;
+
+  text-shadow:
+    3px 3px 0 #000,
+    6px 6px 0 #ff3b3b;
+
+  letter-spacing: 0.12em;
+}
+
+
+.gameOverScore {
+  font-family: "Orbitron", monospace;
+
+  font-size: 1.4rem;
+  font-weight: 700;
+
+  color: #ffffff;
+
+  text-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+.gameOverAccuracy {
+  font-family: "Orbitron", monospace;
+
+  font-size: 1.2rem;
+
+  color: #ffd166;
+}
+
+.gameOverResetText {
+  font-family: "Press Start 2P", monospace;
+
+  font-size: 0.9rem;
+
+  color: #fff;
+
+  padding: 12px 16px;
+
+  border: 2px solid #fff;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  display: inline-block;
+
+  cursor: pointer;
+
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+
+  box-shadow:
+    4px 4px 0 #000;
+
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.gameOverResetText:active {
+  transform: translate(3px, 3px);
+  box-shadow:
+    1px 1px 0 #000;
+}
+
+.gameOverResetText:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translate(-1px, -1px);
+}
+
+
+
+
+
+/* ===================== HUD BAR ===================== */
+
+.hudBar {
+  position: relative;
+  width: 100%;
+  height: 50px;
+
+  font-family: "VT323", monospace;
+  font-size: 2.0rem;
+  font-weight: 600;
+}
+
+.time {
+  position: absolute;
+  left: 20px;
+}
+
+.score {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hits {
+  position: absolute;
+  right: 20px;
+}

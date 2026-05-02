@@ -3,6 +3,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../firebase.tsx';
 import tracingImage from '../assets/CIS 444 Game Trace Icon.png';
 import flickImage from '../assets/CIS 444 Game Flick Icon.png';
+import reactionImage from '../assets/CIS 444 Game Reaction Icon.png';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -81,7 +82,7 @@ function SelectMode()
 				<div className='modeStack' id='mode-reaction-time-stack'>
 					<h2 className='arcadeTitle'>Reaction</h2>
 					<div className='modeImgContainer' onClick={() => runGameMode('reaction')}>
-						<img className="modeImg" src='FIXME' alt="Reaction Mode"></img>
+						<img className="modeImg" src={reactionImage} alt="Reaction Mode"></img>
 					</div>
 					<button className='lbButton' id='mode-reaction-time-lb-button' onClick={() => openLeaderboard('reaction')}>View Leaderboard</button>
 				</div>

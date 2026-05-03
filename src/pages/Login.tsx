@@ -11,7 +11,6 @@ function Login(){
 
     // for accessing text info
     const userRef = useRef<HTMLInputElement>(null);
-    const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
 
@@ -28,20 +27,26 @@ function Login(){
     };
 
     // create account handler
-    const handleAccountCreation = async (username: string, email: string, password: string) => {
+    const handleAccountCreation = async (username: string, password: string) => {
         try{
             if(username.length < 4){
-                alert('Please include a username with a minimum of 4 characters');
+                alert('Username needs a minimum of 4 characters');
                 return;
             }
+            else if(username.length > 40){
+                alert('Username should not exceed 40 characters');
+                return;
+            }
+
+            // firebase authentication requires email, so convert username into fake email
+            const email = username.trim() + '@fake.com';
 
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-
+            // create document for the new user
             await setDoc(doc(db, 'users', user.uid), {
                 username: username,
-                email: email,
                 password: password,
                 flick_score: 0,
                 reaction_score: 0,
@@ -51,7 +56,16 @@ function Login(){
         } catch (e : unknown){
             if(e instanceof Error){
                 console.error('Error Signing Up:', e.message);
-                alert('Could not create account: ' + e.message);
+                if(e.message ===  'Firebase: Error (auth/invalid-email).'){
+                    alert('Could not create account: invalid username');
+                }
+                else if(e.message === 'Firebase: Error (auth/email-already-in-use).'){
+                    alert('Could not create account: username taken');
+                }
+                else{
+                    alert('Could not create account: ' + e.message);
+                }
+                
             }
             else{
                 console.error('Unknown Error Occurred When Signing Up');
@@ -62,8 +76,10 @@ function Login(){
     };
 
     // log in handler
-    const handleLogin = async (email: string, password: string) => {
+    const handleLogin = async (username: string, password: string) => {
         try {
+            // convert username into fake email
+            const email = username + '@fake.com';
             await signInWithEmailAndPassword(auth, email, password);
             navigate('/mode');
         } catch (e : unknown){
@@ -91,10 +107,6 @@ function Login(){
                         <input id="username" type="text" ref={userRef} />
                     </div>
                     <div className="input">
-                        <p className="input-text">Email</p>
-                        <input id="email" type="text" ref={emailRef} />
-                    </div>
-                    <div className="input">
                         <p className="input-text">Password</p>
                         {/* passwdVisibility determines whether it is considered text or password input*/}
                         <input id="password" type={passwdVisibility} ref={passwordRef}/>
@@ -105,8 +117,8 @@ function Login(){
                 <div className="submit-container">
                     <p></p>
                     <button id="signup-submit-button" onClick={() => {
-                        if(userRef.current !== null && emailRef.current !== null && passwordRef.current !== null){
-                            handleAccountCreation(userRef.current.value, emailRef.current.value, passwordRef.current.value);
+                        if(userRef.current !== null && passwordRef.current !== null){
+                            handleAccountCreation(userRef.current.value, passwordRef.current.value);
                         }
                         else {
                             console.error('Something went wrong when trying to get input data for account creation');
@@ -115,8 +127,8 @@ function Login(){
                     }}>Create Account</button>
                     
                     <button id="login_submit-button" onClick={() => {
-                        if(emailRef.current !== null && passwordRef.current !== null){
-                            handleLogin(emailRef.current.value, passwordRef.current.value);
+                        if(userRef.current !== null && passwordRef.current !== null){
+                            handleLogin(userRef.current.value, passwordRef.current.value);
                         }
                         else {
                             console.error('Something went wrong when trying to get input data when logging in');

@@ -316,10 +316,10 @@ export class ReusableGameLogic
 		this.purgeTargets();
 		this.gameState.current = GameState.COMPLETE
 		this.setGameState(this.gameState.current);
-		this.submitScore();
+		this.submitScore(this.score.current.valueOf());
 	}
 
-    async submitScore()
+    async submitScore(newScore: number)
     {
 		if (this.user)
 		{
@@ -338,10 +338,10 @@ export class ReusableGameLogic
 			}
 
 			// if there is a new high score, update the document
-			if(this.score.current > savedScore){
+			if(newScore > savedScore){
 				try {
-					await updateDoc(docRef, {[propName]: this.score.current});
-					alert('New high score of ' + this.score.current + ' has been saved!');
+					await updateDoc(docRef, {[propName]: newScore});
+					alert('New high score of ' + newScore + ' has been saved!');
 				} catch (error){
 					console.error('Error updating score: ', error);
 				}

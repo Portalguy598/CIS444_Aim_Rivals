@@ -10,6 +10,54 @@ body {
   overflow: hidden;
 }
 
+body.login-page {
+  margin: 0;
+  padding: 0;
+
+  font-family: 'Roboto', sans-serif;
+
+  background: radial-gradient(circle at top, #1a1a1a, #0d0d0d);
+  color: white;
+
+  overflow: hidden;
+}
+
+body.login-page::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  width: 97vmin;
+  height: 97vmin;
+
+  transform: translate(-50%, -50%);
+  border: 10px solid #ff3b3b;
+  border-radius: 50%;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+body.login-page::after {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  width: 88vmin;
+  height: 88vmin;
+
+  transform: translate(-50%, -50%);
+  border: 10px solid #ffffff;
+  border-radius: 50%;
+
+  pointer-events: none;
+  z-index: 0;
+
+  opacity: 0.9;
+}
 
 .containerLogin {
   width: 100%;
@@ -23,7 +71,10 @@ body {
 
   text-align: center;
 
-  gap: 20px; 
+  gap: 20px;
+
+  position: relative;
+  z-index: 10;
 }
 
 .containerLogin > h1 {
@@ -63,7 +114,10 @@ body {
   flex-direction: column;
   gap: 15px;
 
-   align-self: center;
+  align-self: center;
+
+  position: relative;
+  z-index: 10;
 }
 
 
@@ -106,17 +160,12 @@ body {
   position: relative;
 }
 
-
 .input-text {
   font-size: 0.75rem;
-
   font-family: 'Press Start 2P', monospace;
-
   letter-spacing: 1px;
-
   color: rgba(255, 255, 255, 0.7);
 }
-
 
 .input input {
   padding: 10px;
@@ -136,7 +185,6 @@ body {
   border-color: #ff2d2d;
   box-shadow: 0 0 10px rgba(255, 45, 45, 0.3);
 }
-
 
 
 #passwd-toggle {
@@ -188,7 +236,6 @@ button {
   transition: 0.2s ease;
 }
 
-
 #signup-submit-button {
   background: #ff2d2d;
   color: white;
@@ -199,13 +246,18 @@ button {
   transform: translateY(-1px);
 }
 
-
 #login_submit-button {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
+  background:  #ff2d2d;
 }
 
 #login_submit-button:hover {
-  background: rgba(255, 255, 255, 0.25);
   transform: translateY(-1px);
+}
+
+
+@media screen and (max-width: 900px) {
+  body::before,
+  body::after {
+    opacity: 0;
+  }
 }

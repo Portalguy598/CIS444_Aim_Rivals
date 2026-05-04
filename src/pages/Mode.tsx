@@ -1,18 +1,28 @@
 import './Mode.css';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase.tsx';
-import tracingImage from '../assets/CIS 444 Game Trace Icon.png';
-import flickImage from '../assets/CIS 444 Game Flick Icon.png';
-import reactionImage from '../assets/CIS 444 Game Reaction Icon.png';
+import tracingImage from '../assets/Tracing.jpg';
+import flickImage from '../assets/Flicks.jpg';
+import reactionImage from '../assets/Reaction.jpg';
 
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Modes = {'reaction' : 0, 'flicks' : 1, 'tracing' : 2};
 
 function SelectMode()
 {
-	const navigate = useNavigate();
 	
+	const navigate = useNavigate();
+
+	useEffect(() => {
+  document.body.classList.add("mode-page");
+
+  return () => {
+    document.body.classList.remove("mode-page");
+  };
+}, []);
+
 	const runGameMode = (mode: string) =>
 	{
 		

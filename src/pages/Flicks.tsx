@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext.tsx';
 
@@ -73,7 +73,7 @@ export default function FlicksGame()
 
 			{}
 			<div className='header'>
-				<h3 className='arcadeTitle'>Aim Rivals</h3>
+				<h3 className='arcadeTitle'>Flicks</h3>
 				<div className='headerButtonContainer'>
 					<button className='arcadeTitle' id="quit-button" onClick={quitGame}>
 						Quit Game
@@ -94,7 +94,7 @@ export default function FlicksGame()
 				</span>
 			</div>
 
-			{/* GAME */}
+			{}
 			<div className='gameContainerFlicks' onClick={onGameClick}>
 
 				<div className='targetContainerFlicks'>
@@ -115,7 +115,7 @@ export default function FlicksGame()
 	<div
 		className='gameOverlayFlicks'
 		onClick={(e) => {
-			e.stopPropagation();   // 👈 THIS IS THE FIX
+			e.stopPropagation(); 
 			doGameStart();
 		}}
 	>

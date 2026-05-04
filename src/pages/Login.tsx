@@ -4,10 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import { useEffect } from 'react';
 
 function Login(){
     // for navigation
     const navigate = useNavigate();
+
+    useEffect(() => {
+  document.body.classList.add("login-page");
+
+  return () => {
+    document.body.classList.remove("login-page");
+  };
+}, []);
 
     // for accessing text info
     const userRef = useRef<HTMLInputElement>(null);

@@ -1,22 +1,22 @@
 #logout-button {
-	margin-right: auto;
-	width: 10vw;
-	height: 5vh;
-	background-color: #FF5050;
-	border: none;
-	color: white;
-	font-weight: 600;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: 0.2s ease;
+  margin-right: auto;
+  width: 140px;
+  height: 42px;
+  background-color: #FF5050;
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
 #logout-button:hover {
-	background-color: #ff2f2f;
-	transform: scale(1.03);
+  background-color: #ff2f2f;
+  transform: scale(1.03);
 }
 
-
+/* ===================== Main Layout ===================== */
 
 .bodyContainer {
   display: flex;
@@ -27,8 +27,51 @@
   gap: 50px;
   padding: 20px;
   box-sizing: border-box;
+
+  overflow: hidden;
 }
 
+
+body.mode-page::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  width: 97vmin;
+  height: 97vmin;
+
+  transform: translate(-50%, -50%) translateZ(0);
+  border: 10px solid #ff3b3b;
+  border-radius: 50%;
+
+  pointer-events: none;
+  z-index: 0;
+
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+body.mode-page::after {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  width: 88vmin;
+  height: 88vmin;
+
+  transform: translate(-50%, -50%) translateZ(0);
+  border: 10px solid #ffffff;
+  border-radius: 50%;
+
+  pointer-events: none;
+  z-index: 0;
+
+  will-change: transform;
+  backface-visibility: hidden;
+}
+/* ===================== Mode Cards ===================== */
 
 .modeStack {
   display: flex;
@@ -41,12 +84,15 @@
   padding: 16px;
   border-radius: 16px;
 
-  background: rgba(255, 255, 255, 0.04);
+  background: #121212;
   border: 1px solid rgba(255, 255, 255, 0.08);
 
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 
   transition: 0.25s ease;
+
+  position: relative;
+  z-index: 10;
 }
 
 .modeStack:hover {
@@ -55,61 +101,65 @@
 }
 
 .modeTitle {
-	font-size: 1.8rem;
-	font-weight: 700;
-	color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
 }
 
+/* ===================== Image Box ===================== */
 
 .modeImgContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-	width: 100%;
-	min-height: 160px;
+  width: 100%;
+  min-height: 160px;
 
-	border-radius: 12px;
-	overflow: hidden;
+  border-radius: 12px;
+  overflow: hidden;
 
-	background: rgba(255, 255, 255, 0.05);
-	border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
-	cursor: pointer;
-	transition: 0.2s ease;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .modeImgContainer:hover {
-	transform: scale(1.03);
-	background: rgba(255, 255, 255, 0.08);
+  transform: scale(1.03);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .modeImg {
-	max-width: 90%;
-	max-height: 140px;
-	object-fit: contain;
+  max-width: 90%;
+  max-height: 140px;
+  object-fit: contain;
 }
 
+/* ===================== Button ===================== */
 
 .lbButton {
-	width: 100%;
-	height: 48px;
-	font-size: 0.95rem;
+  width: 100%;
+  height: 48px;
+  font-size: 0.95rem;
 
-	background-color: #90D090;
-	border: none;
-	border-radius: 10px;
+  background: #ff7a18;
+  border: none;
+  border-radius: 10px;
 
-	font-weight: 600;
-	cursor: pointer;
+  font-weight: 600;
+  cursor: pointer;
 
-	transition: 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .lbButton:hover {
-	background-color: #74c974;
-	transform: scale(1.02);
+   background-color: #ff7a18;
+  transform: scale(1.02);
 }
+
+/* ===================== Title ===================== */
 
 .gameTitle {
   font-family: "Press Start 2P", monospace;
@@ -123,27 +173,28 @@
   letter-spacing: 0.12em;
   line-height: 1.4;
 
-  
   text-shadow:
     3px 3px 0 #000,
     6px 6px 0 #ff3b3b;
 
   margin-bottom: 30px;
 
-  
   image-rendering: pixelated;
 
-  
   animation: pixelPop 0.25s steps(2, end);
+
+  position: relative;
+  z-index: 10;
+}
+
+.gameTitle:hover {
+  /*background-color: #ff2f2f;*/
+  transform: scale(1.03);
 }
 
 @keyframes pixelPop {
-  0% {
-    transform: scale(0.7);
-  }
-  100% {
-    transform: scale(1);
-  }
+  0% { transform: scale(0.7); }
+  100% { transform: scale(1); }
 }
 
 .arcadeTitle {
@@ -154,10 +205,27 @@
 
   color: #fff;
 
-  text-shadow:
-    3px 3px 0 #000;
+   text-shadow:
+    2px 2px 0 #000,
+    4px 4px 0 #ff3b3b;
+
 
   margin: 0;
 
   image-rendering: pixelated;
+}
+
+/* ===================== Size Response ===================== */
+
+@media screen and (max-width: 1200px) {
+  .bodyContainer {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  body::before,
+  body::after {
+    opacity: 0;
+  }
 }

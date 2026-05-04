@@ -66,7 +66,7 @@ export default function ReactionGame()
 	return (
 		<div className='container font-roboto'>
 			<div className='header'>
-				<h3 className='arcadeTitle'>Aim Rivals</h3>
+				<h3 className='arcadeTitle'>Reaction</h3>
 				<div className='headerButtonContainer'>
 					<button className='arcadeTitle' id="quit-button" onClick={quitGame}>Quit Game</button>
 				</div>

@@ -9,7 +9,9 @@ function ReactionLeaderboard(){
     }
     return(
         <>
-            <h1>Reaction Leaderboard</h1>
+            <h2 className="leaderboard-title">
+  Reaction Leaderboard
+</h2>
             <button onClick={returnToModeHandler}>Back to mode select</button>
             <LeaderboardWindow mode="reaction"></LeaderboardWindow>
         </>

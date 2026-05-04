@@ -42,7 +42,7 @@ export default function TraceGame() {
 		console.log('OnTargetHit called with ' + targetID);
 	};
 
-	const onGameClick = () => {};
+	//const onGameClick = () => {};
 
 	const doGameStart = () => {
 		gameLogic.doGameStart();
@@ -72,7 +72,7 @@ export default function TraceGame() {
 	return (
 		<div className='container font-roboto'>
 			<div className='header'>
-				<h3 className='arcadeTitle'>Aim Rivals</h3>
+				<h3 className='arcadeTitle'>Tracing</h3>
 				<div className='headerButtonContainer'>
 					<button className='arcadeTitle' id='quit-button' onClick={quitGame}>
 						Quit Game

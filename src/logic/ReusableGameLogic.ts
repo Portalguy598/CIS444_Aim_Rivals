@@ -79,7 +79,7 @@ export class ReusableGameLogic
 
 
         this.timeLeft = useRef(gameTime);
-        this.clicks = useRef(0); //-1 because first click to start game counts
+        this.clicks = useRef(0);
         this.hits = useRef(0);
         this.score = useRef(0);
         this.gameState = useRef(GameState.NEW);
@@ -122,7 +122,7 @@ export class ReusableGameLogic
 		const maxY = 100 - margin;
 		const minY = margin;
 
-		console.log(`dbg: propX = ${proposedX} propY = ${proposedY}`)
+		//console.log(`dbg: propX = ${proposedX} propY = ${proposedY}`)
 
 		if (proposedX < minX || proposedX > maxX) { return false; }
 		if (proposedY < minY || proposedY > maxY) { return false; }

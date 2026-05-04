@@ -60,22 +60,7 @@ export class TraceLogic extends ReusableGameLogic
             return;
         }
 
-        this.isMouseDown.current = false;
-
-        // increment click count 
-        this.clicks.current += 1;
-        this.setClicks(this.clicks.current);
-
-
-        if (this.hoveredTarget.current != null)
-        {
-            this.hits.current += 1;
-            this.setHits(this.hits.current);
-
-            this.score.current += this.BASE_POINTS_ON_HIT;
-            this.setScore(this.score.current);
-        }
-            
+        this.isMouseDown.current = false; 
     }
 
     onTargetHover(target: Target)
@@ -93,7 +78,32 @@ export class TraceLogic extends ReusableGameLogic
 
     calculateHoverPoints()
     {
-        return;
+        if (this.gameState.current !== GameState.PLAYING) { return; }
+
+        if (!this.isMouseDown.current) { return; }
+
+        this.clicks.current += 1;
+        this.setClicks(this.clicks.current);
+
+        if (this.hoveredTarget.current != null)
+        {
+            this.hits.current += 1;
+		    this.setHits(this.hits.current);
+        }
+        else
+        {
+            return;
+        }
+
+        
+        let accuracyScale = 1;
+        //TODO scale points according to how close the cursor is to the center of the target
+        const calculatedPoints = this.BASE_POINTS_ON_HIT * accuracyScale;
+
+        this.score.current += calculatedPoints;
+		this.setScore(this.score.current);
+
+        console.log("dbg: added points for hovered target w/ id " + this.hoveredTarget.current.id)
     }
 
     moveTargets()
@@ -160,7 +170,7 @@ export class TraceLogic extends ReusableGameLogic
 
     preTargetCullHook()
     {
-        // no scoring here anymore
+        this.calculateHoverPoints();
     }
 
     preTargetPlaceHook()

@@ -42,8 +42,6 @@ export default function TraceGame() {
 		console.log('OnTargetHit called with ' + targetID);
 	};
 
-	const onGameClick = () => {};
-
 	const doGameStart = () => {
 		gameLogic.doGameStart();
 	};

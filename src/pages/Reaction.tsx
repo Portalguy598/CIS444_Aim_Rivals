@@ -8,12 +8,12 @@ import { GameState } from '../logic/ReusableGameLogic.ts';
 import { ReactionLogic } from '../logic/ReactionLogic.ts';
 
 const CULL_TARGET_AGE = 0.55;
-const BASE_POINTS_ON_HIT = 10;
+const BASE_POINTS_ON_HIT = 50;
 const TARGET_PLACE_PERIOD = 1;
 const TARGET_PLACE_ATTEMPTS = 5;
-const TARGET_PLACE_BOUNDARY = 0.3;
+const TARGET_PLACE_BOUNDARY = 600;
 const GAME_TIME = 30;
-const TICK_PERIOD = 100; //Needs to be fast so point allocation feels less discrete
+const TICK_PERIOD = 50; //Needs to be fast so point allocation feels less discrete
 const GRACE_PERIOD = 0.250;
 const MIN_POINT_SCALE = 0.5;
 
@@ -88,7 +88,11 @@ export default function ReactionGame()
 
 				<div className='targetContainerReact'>
 					{gameLogic.uiTargets.map((target) => (
-						<div key={target.id} className='targetReact' style={{left: `${target.xPos}%`, top: `${target.yPos}%` }} 
+						<div key={target.id}
+							id={target.id.toString()}
+							className='targetReact'
+							style={{left: `${target.xPos}%`,
+							top: `${target.yPos}%` }} 
 						/*onClick={() => onTargetHit(target.id)}*/
 
 						onPointerDown={(e) => 

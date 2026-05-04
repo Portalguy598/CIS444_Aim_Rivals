@@ -7,10 +7,10 @@ import './Flicks.css';
 import { ReusableGameLogic, GameState } from '../logic/ReusableGameLogic.ts';
 
 const CULL_TARGET_AGE = 2;
-const BASE_POINTS_ON_HIT = 10;
+const BASE_POINTS_ON_HIT = 25;
 const TARGET_PLACE_PERIOD = 0.333;
 const TARGET_PLACE_ATTEMPTS = 5;
-const TARGET_PLACE_BOUNDARY = 1;
+const TARGET_PLACE_BOUNDARY = 600;
 const GAME_TIME = 30;
 const TICK_PERIOD = 100;
 
@@ -101,6 +101,7 @@ export default function FlicksGame()
 					{gameLogic.uiTargets.map((target) => (
 						<div
 							key={target.id}
+							id={target.id.toString()}
 							className='targetFlicks'
 							style={{
 								left: `${target.xPos}%`,

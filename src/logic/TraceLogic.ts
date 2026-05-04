@@ -60,7 +60,7 @@ export class TraceLogic extends ReusableGameLogic
             return;
         }
 
-        this.isMouseDown.current = false; 
+        this.isMouseDown.current = false;
     }
 
     onTargetHover(target: Target)
@@ -96,14 +96,13 @@ export class TraceLogic extends ReusableGameLogic
         }
 
         
-        let accuracyScale = 1;
-        //TODO scale points according to how close the cursor is to the center of the target
-        const calculatedPoints = this.BASE_POINTS_ON_HIT * accuracyScale;
+        const accuracyScale = 1 - this.calculateBullseyeOffset(this.hoveredTarget.current);
+        const calculatedPoints = Math.ceil(this.BASE_POINTS_ON_HIT * accuracyScale);
 
         this.score.current += calculatedPoints;
 		this.setScore(this.score.current);
 
-        console.log("dbg: added points for hovered target w/ id " + this.hoveredTarget.current.id)
+        //console.log(`dbg: added points for hovered target w/ id ${this.hoveredTarget.current.id}. Accuracy scale was ${accuracyScale}`)
     }
 
     moveTargets()
@@ -132,7 +131,7 @@ export class TraceLogic extends ReusableGameLogic
                 valid = this.positionWithinBounds(
                     target.xPos + target.xOffset + xDelta,
                     target.yPos + target.yOffset + yDelta,
-                    0
+                    3
                 );
 
                 if (!valid)

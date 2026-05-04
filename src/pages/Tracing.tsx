@@ -8,12 +8,13 @@ import { GameState } from '../logic/ReusableGameLogic.ts';
 import type { Target } from '../logic/ReusableGameLogic.ts';
 
 const CULL_TARGET_AGE = 4;
-const BASE_POINTS_ON_HIT = 1;
+const BASE_POINTS_ON_HIT = 5;
 const TARGET_PLACE_PERIOD = 5;
 const TARGET_PLACE_ATTEMPTS = 5;
-const TARGET_PLACE_BOUNDARY = 1;
+const TARGET_PLACE_BOUNDARY = 600;
 const GAME_TIME = 30;
-const TICK_PERIOD = 70;//250;
+const TICK_PERIOD = 70;
+const TARGET_STRIDE = 5;
 
 export default function TraceGame() {
 	const { user } = useAuth();
@@ -30,7 +31,7 @@ export default function TraceGame() {
 		true,
 		user!!,
 		"trace_score",
-		5,
+		TARGET_STRIDE,//5,
 		Math.PI / 8
 	);
 
@@ -42,10 +43,9 @@ export default function TraceGame() {
 		console.log('OnTargetHit called with ' + targetID);
 	};
 
-	//const onGameClick = () => {};
-
 	const doGameStart = () => {
 		gameLogic.doGameStart();
+
 	};
 
 	const doGameReset = () => {
@@ -102,6 +102,7 @@ export default function TraceGame() {
 					{gameLogic.uiTargets.map((target) => (
 						<div
 							key={target.id}
+							id={target.id.toString()}
 							className= 'targetTrace'
 							style={{
 								left: `${target.xPos}%`,

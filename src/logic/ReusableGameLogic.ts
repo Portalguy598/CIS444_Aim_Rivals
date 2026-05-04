@@ -111,7 +111,7 @@ export class ReusableGameLogic
 
     addTarget(xPos: number, yPos: number) 
     {
-		console.log("New target at: " + xPos + ", " + yPos);
+		//console.log("New target at: " + xPos + ", " + yPos);
 		const id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
 		const curTimeLeft = this.timeLeft.current;
 		const angle = Math.random() * Math.PI * 2;
@@ -141,7 +141,7 @@ export class ReusableGameLogic
 
     randomlyPlaceNewTarget()
     {
-		console.log("Placing target");
+		//console.log("Placing target");
 		let xPos: number = 0.5;
 		let yPos: number  = 0.5;
 		
@@ -158,7 +158,7 @@ export class ReusableGameLogic
 			{
 				const sqrDistance = (xPos - existingTarget.xPos) ** 2 + (yPos - existingTarget.yPos) ** 2
 				if (sqrDistance < this.TARGET_PLACE_BOUNDARY) { foundCandidate = false; continue; };
-				console.log(`dst: ${sqrDistance}`);
+				//console.log(`dst: ${sqrDistance}`);
 			}
 
 			++attempts;
@@ -180,7 +180,7 @@ export class ReusableGameLogic
 		this.targets.current = this.targets.current.filter(target => target.id !== id);
 		this.setTargets(this.targets.current);
 
-		console.log("dbg: removed target with id " + id);
+		//console.log("dbg: removed target with id " + id);
 	}
 
     purgeTargets()
@@ -229,7 +229,7 @@ export class ReusableGameLogic
 			else
 			{
 				changesMade = true;
-				console.log("dbg: culled target with id " + target.id);
+				//console.log("dbg: culled target with id " + target.id);
 			}
 		}
 		
@@ -244,7 +244,7 @@ export class ReusableGameLogic
     {
 		if (this.gameState.current !== GameState.PLAYING) { return; }
 		
-		console.log("Hit target");
+		//console.log("Hit target");
 		this.hits.current += 1;
 		this.setHits(this.hits.current);
 		
@@ -262,7 +262,7 @@ export class ReusableGameLogic
 		
 		this.score.current += Math.ceil(this.BASE_POINTS_ON_HIT * accuracyScale);
 		this.setScore(this.score.current);
-		console.log(`Updated score to ${this.score.current} with accuracyScale of ${accuracyScale}`);
+		//console.log(`Updated score to ${this.score.current} with accuracyScale of ${accuracyScale}`);
 
 		this.removeTarget(targetID);
 	}
@@ -271,14 +271,14 @@ export class ReusableGameLogic
     {
 		if (this.gameState.current !== GameState.PLAYING) { return; }
 		
-		console.log('hit onGameClick');
+		//console.log('hit onGameClick');
 		this.clicks.current += 1;
 		this.setClicks(this.clicks.current);
 	}
 
     doGameStart()
     {
-		console.log("Game starting");
+		//console.log("Game starting");
 		// if timerTicker !== -1, then it has been assigned an ID through setInterval
 		if (this.timerTicker !== -1)
 		{
@@ -295,7 +295,7 @@ export class ReusableGameLogic
 
     doGameReset()
     {
-		console.log("Game reset");
+		//console.log("Game reset");
 		this.timeLeft.current = this.GAME_TIME;
 		this.setTimeLeft(this.timeLeft.current);
 		this.clicks.current = 0;
@@ -312,7 +312,7 @@ export class ReusableGameLogic
 
     doGameEnd()
     {
-		console.log("Game ended");
+		//console.log("Game ended");
 		this.purgeTargets();
 		this.gameState.current = GameState.COMPLETE
 		this.setGameState(this.gameState.current);
@@ -323,7 +323,7 @@ export class ReusableGameLogic
     {
 		if (this.user)
 		{
-			console.log('made it into submitScore');
+			//console.log('made it into submitScore');
 			// get current stored score to compare to the new one
 			const docRef = doc(db, 'users', this.user.uid);
 			const docSnap = await getDoc(docRef);

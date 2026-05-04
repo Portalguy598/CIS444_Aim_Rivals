@@ -47,7 +47,7 @@ export class ReactionLogic extends ReusableGameLogic
     {
         if (this.gameState.current !== GameState.PLAYING) { return; }
 		
-		console.log("Hit target");
+		//console.log("Hit target");
 
 		this.hits.current += 1;
 		this.setHits(this.hits.current);
@@ -64,7 +64,7 @@ export class ReactionLogic extends ReusableGameLogic
         {
             const targetAge = targetObj.spawnTime - this.timeLeft.current;
             const calculatedScore = this.BASE_POINTS_ON_HIT * this.interpPointScale(targetAge);
-            console.log(`calc'd score: ${calculatedScore}`);
+            //console.log(`calc'd score: ${calculatedScore}`);
             this.score.current += Math.floor(calculatedScore);
             this.setScore(this.score.current);
         }
@@ -80,7 +80,7 @@ export class ReactionLogic extends ReusableGameLogic
     interpPointScale(targetAge: number): number
     {
         let scalar = (this.INTERP_SLOPE * targetAge) + this.INTERP_YINT;
-        console.log(`DBG: Raw scalar: ${scalar}`);
+        //console.log(`DBG: Raw scalar: ${scalar}`);
         if (scalar > 1.0) { scalar = 1.0; }
         else if (scalar < this.SLOW_REACTION_POINT_SCALAR) { scalar = this.SLOW_REACTION_POINT_SCALAR; }
 

@@ -31,7 +31,7 @@ export default function TraceGame() {
 		true,
 		user!!,
 		"trace_score",
-		TARGET_STRIDE,//5,
+		TARGET_STRIDE,
 		Math.PI / 8
 	);
 

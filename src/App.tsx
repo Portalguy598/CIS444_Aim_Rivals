@@ -34,6 +34,7 @@ function App() {
         <Route path='/flicks-leaderboard' element={<ProtectedRoute> <FlicksLeaderboard /> </ProtectedRoute>} />
         <Route path='/reaction-leaderboard' element={<ProtectedRoute> <ReactionLeaderboard /> </ProtectedRoute>} />
         <Route path='/tracing-leaderboard' element={<ProtectedRoute> <TracingLeaderboard /> </ProtectedRoute>} />
+        {/* if not on a valid route, go to /login automatically */}
         <Route path='*' element={<Navigate to="/login" replace></Navigate>} />
       </Routes>
     </AuthProvider>

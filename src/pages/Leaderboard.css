@@ -126,15 +126,6 @@ button:hover {
      transform: translateY(-1px);
 }
 
-.leaderboard-table td {
-    font-size: 1.2rem;
-}
-
-.leaderboard-table th {
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
 .leaderboard-controls {
     display: flex;
     justify-content: center;
@@ -220,7 +211,7 @@ button:hover {
   100% { text-shadow: 0 0 6px #ffd166, 0 0 12px #ffb703, 2px 2px 0 #000; }
 }
 
-
+/*Mobile UI adjustment*/
 @media (max-width: 600px) {
   .leaderboard-window {
     width: auto;

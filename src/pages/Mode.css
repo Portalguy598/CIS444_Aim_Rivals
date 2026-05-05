@@ -188,7 +188,7 @@ body.mode-page::after {
 }
 
 .gameTitle:hover {
-  /*background-color: #ff2f2f;*/
+  
   transform: scale(1.03);
 }
 

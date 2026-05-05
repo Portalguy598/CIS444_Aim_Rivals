@@ -26,9 +26,6 @@ export default function ReactionGame()
 	
 	const navigate = useNavigate();
 	
-	
-
-
 	if(user === null){
 		console.error('User was null in reaction game mode');
 		return;
@@ -36,10 +33,6 @@ export default function ReactionGame()
 
 	const gameLogic = new ReactionLogic(CULL_TARGET_AGE, BASE_POINTS_ON_HIT, TARGET_PLACE_PERIOD, TARGET_PLACE_ATTEMPTS, TARGET_PLACE_BOUNDARY, GAME_TIME, TICK_PERIOD, true, user, "reaction_score", GRACE_PERIOD, MIN_POINT_SCALE);
 	
-	// const logout = () => {
-	// 	// when it is recognized that the user is signed out, they are automatically sent to the login page
-	// 	signOut(auth);
-	// }
 	
 	const quitGame = () => {
 		navigate('/mode');
@@ -93,7 +86,7 @@ export default function ReactionGame()
 							className='targetReact'
 							style={{left: `${target.xPos}%`,
 							top: `${target.yPos}%` }} 
-						/*onClick={() => onTargetHit(target.id)}*/
+						
 
 						onPointerDown={(e) => 
 					{
@@ -106,7 +99,7 @@ export default function ReactionGame()
 				</div>
 				
 				{(gameLogic.uiGameState === GameState.NEW) && (
-					<div //className='gameOverlayReact' onClick={doGameStart}>
+					<div 
 					className='gameOverlayReact'
 					onClick={(e) => {e.stopPropagation();	
 						doGameStart(); 

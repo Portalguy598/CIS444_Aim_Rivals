@@ -12,17 +12,19 @@ const Modes = {'reaction' : 0, 'flicks' : 1, 'tracing' : 2};
 
 function SelectMode()
 {
-	
+	// used to navigate between pages
 	const navigate = useNavigate();
 
+	// loads and unloads mode-page style upon entering and leaving page
 	useEffect(() => {
-  document.body.classList.add("mode-page");
+  		document.body.classList.add("mode-page");
 
-  return () => {
-    document.body.classList.remove("mode-page");
-  };
+  		return () => {
+    	document.body.classList.remove("mode-page");
+  		};
 }, []);
 
+	// handles navigation to each game mode
 	const runGameMode = (mode: string) =>
 	{
 		
@@ -49,6 +51,7 @@ function SelectMode()
 		}
 	}
 	
+	// handles navigation to the leaderboard
 	const openLeaderboard = (mode: string) =>
 	{
 		console.log(`TODO open leaderboard for mode ${Modes[mode as keyof typeof Modes]}`);

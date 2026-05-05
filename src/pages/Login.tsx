@@ -10,12 +10,13 @@ function Login(){
     // for navigation
     const navigate = useNavigate();
 
+    // adds and removes login-page class when entering and exiting page
     useEffect(() => {
         document.body.classList.add("login-page");
 
-    return () => {
-        document.body.classList.remove("login-page");
-    };
+        return () => {
+            document.body.classList.remove("login-page");
+        };
     }, []);
 
     // for accessing text info

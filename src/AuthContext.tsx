@@ -10,6 +10,7 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// used to gain the current authenticated user, needs to be used within AuthProvider
 export function useAuth(): AuthContextType {
     const context = useContext(AuthContext);
     if (!context) {
@@ -18,6 +19,7 @@ export function useAuth(): AuthContextType {
     return context;
 }
 
+// AuthProvider wraps the routes so the AuthContext is available
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);

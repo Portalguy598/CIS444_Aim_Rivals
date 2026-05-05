@@ -47,3 +47,32 @@ https://cis444-aim-rivals.web.app
 
 # Deployment
 firebase deploy
+
+---
+
+# Resources Used
+Initial react app template provided by Vite
+
+Libraries: react, react-dom, react-router-dom, firebase
+
+Implementing firebase into the app: https://firebase.google.com/docs/web/setup?continue=https%3A%2F%2Ffirebase.google.com%2Flearn%2Fpathways%2Ffirebase-web%23article-https%3A%2F%2Ffirebase.google.com%2Fdocs%2Fweb%2Fsetup 
+
+Create protected routes (AI used): https://docs.google.com/document/d/1BAXZwX2tPIIrqMFiQZY_ginMB5HFB0Y7CD9CUNw-q18/edit?usp=sharing 
+
+General navigation: 
+https://reactrouter.com/start/declarative/navigating 
+
+Catch all redirect: 
+https://jasonwatmore.com/react-router-v6-catch-all-default-redirect-in-react 
+
+Firestore document creation/querying: 
+https://firebase.google.com/docs/firestore 
+
+Screen size based adjustments: 
+https://www.geeksforgeeks.org/css/how-to-target-specific-screen-sizes-or-devices-with-css/ 
+
+Detecting touch screen devices in CSS:
+https://web.dev/articles/accessible-tap-targets#using-media-queries-to-detect-touchscreen-use 
+
+
+

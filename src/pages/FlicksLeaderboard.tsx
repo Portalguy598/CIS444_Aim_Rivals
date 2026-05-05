@@ -10,9 +10,7 @@ function FlicksLeaderboard(){
     }
     return(
         <>
-             <h2 className="leaderboard-title">
-            Flicks Leaderboard
-            </h2>
+             <h2 className="leaderboard-title">Flicks Leaderboard</h2>
             <button onClick={returnToModeHandler}>Back to mode select</button>
             <LeaderboardWindow mode="flick"></LeaderboardWindow>
         </>

@@ -20,6 +20,7 @@ function LeaderboardWindow({mode}: {mode: string}){
     useEffect(() => {
         const getCollectionData = async () => {
             try{
+                // order scores by number, then get snapshot of the docs
                 const q = query(collection(db, 'users'), orderBy(mode + '_score', 'desc'), orderBy('username'));
                 const snapshot = await getDocs(q);
             

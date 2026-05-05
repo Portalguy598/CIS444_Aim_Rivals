@@ -10,7 +10,9 @@ function TracingLeaderboard(){
 
     return(
         <>
-            <h1>Tracing Leaderboard</h1>
+             <h2 className="leaderboard-title">
+            Tracing Leaderboard
+            </h2>
             <button onClick={returnToModeHandler}>Back to mode select</button>
             <LeaderboardWindow mode="trace"></LeaderboardWindow>
         </>

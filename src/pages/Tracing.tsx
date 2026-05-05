@@ -45,6 +45,7 @@ export default function TraceGame() {
 
 	const doGameStart = () => {
 		gameLogic.doGameStart();
+
 	};
 
 	const doGameReset = () => {
@@ -71,7 +72,7 @@ export default function TraceGame() {
 	return (
 		<div className='container font-roboto'>
 			<div className='header'>
-				<h3 className='arcadeTitle'>Aim Rivals</h3>
+				<h3 className='arcadeTitle'>Tracing</h3>
 				<div className='headerButtonContainer'>
 					<button className='arcadeTitle' id='quit-button' onClick={quitGame}>
 						Quit Game

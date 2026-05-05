@@ -1,6 +1,8 @@
 .leaderboard-window {
     margin: 0 auto;
     width: min(500px, 90vw);
+    position: relative;
+    overflow: hidden;
 
     background: rgba(20, 20, 20, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -16,13 +18,35 @@
     font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
+
+.leaderboard-window::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 200%;
+  height: 200%;
+
+  background: radial-gradient(
+    circle at top,
+    rgba(255, 209, 102, 0.25) 0%,
+    rgba(255, 209, 102, 0.12) 25%,
+    transparent 60%
+  );
+
+  pointer-events: none;
+  z-index: 0;
+}
+
 .leaderboard-display {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-/* each row */
+
 .leaderboard-row {
     display: flex;
     justify-content: space-between;
@@ -41,20 +65,20 @@
     background: rgba(255, 255, 255, 0.10);
 }
 
-/* rank styling */
+
 .leaderboard-rank {
     font-weight: 700;
     opacity: 0.8;
     width: 40px;
 }
 
-/* username */
+
 .leaderboard-name {
     flex: 1;
     text-align: left;
 }
 
-/* score */
+
 .leaderboard-score {
     font-weight: 600;
     color: #ffd166;
@@ -85,7 +109,7 @@
     transform: translateY(0px);
 }
 button {
-    background: #ff7a18;
+    background-color: #FF5050;
     color: white;
 
     border: none;
@@ -98,7 +122,8 @@ button {
 }
 
 button:hover {
-    background: #ff9a3c;
+    background-color: #FF5050;
+     transform: translateY(-1px);
 }
 
 .leaderboard-table td {
@@ -113,7 +138,7 @@ button:hover {
 .leaderboard-controls {
     display: flex;
     justify-content: center;
-    gap: 16px; /* 👈 THIS is the real fix */
+    gap: 16px; 
     margin-top: 15px;
 }
 
@@ -122,7 +147,7 @@ button:hover {
     width: 70px;
     text-align: center;
     font-variant-numeric: tabular-nums;
-    white-space: pre; /* preserves spacing */
+    white-space: pre; 
 }
 
 .rank-num {
@@ -131,7 +156,7 @@ button:hover {
     font-variant-numeric: tabular-nums;
 }
 
-/* optional spacing so emoji doesn't shift layout */
+
 .rank-gold,
 .rank-silver,
 .rank-bronze {
@@ -139,3 +164,60 @@ button:hover {
     gap: 4px;
     align-items: center;
 }
+
+.leaderboard-title {
+  font-family: "Press Start 2P", monospace;
+
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  text-align: center;
+  text-transform: uppercase;
+
+  color: #fff8cc; 
+
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+
+  margin-bottom: 20px;
+
+
+  text-shadow:
+    0 0 6px #ffd166,
+    0 0 12px #ffb703,
+    0 0 24px rgba(255, 183, 3, 0.6),
+    2px 2px 0 #000;
+
+  image-rendering: pixelated;
+}
+
+.leaderboard-title::after {
+  content: "";
+  display: block;
+  margin: 12px auto 0;
+
+  width: 60%;
+  height: 4px;
+
+  background: #ff3b3b;
+
+  box-shadow:
+    2px 2px 0 #000;
+
+}
+
+.leaderboard-title {
+  animation: goldPulse 2s ease-in-out infinite;
+}
+
+.leaderboard-title {
+  position: relative;
+  z-index: 2;
+}
+
+
+@keyframes goldPulse {
+  0% { text-shadow: 0 0 6px #ffd166, 0 0 12px #ffb703, 2px 2px 0 #000; }
+  50% { text-shadow: 0 0 10px #ffe08a, 0 0 20px #ffd166, 2px 2px 0 #000; }
+  100% { text-shadow: 0 0 6px #ffd166, 0 0 12px #ffb703, 2px 2px 0 #000; }
+}
+
+

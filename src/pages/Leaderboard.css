@@ -1,5 +1,5 @@
 .leaderboard-window {
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
     width: min(500px, 90vw);
     position: relative;
     overflow: hidden;
@@ -221,3 +221,21 @@ button:hover {
 }
 
 
+@media (max-width: 600px) {
+  .leaderboard-window {
+    width: auto;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+}.leaderboard-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.leaderboard-table td,
+.leaderboard-table th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

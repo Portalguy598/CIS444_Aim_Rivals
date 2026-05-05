@@ -57,11 +57,16 @@ function Login(){
             // create document for the new user
             await setDoc(doc(db, 'users', user.uid), {
                 username: username,
-                password: password,
                 flick_score: 0,
                 reaction_score: 0,
                 trace_score: 0
             });
+            // create additional document containing password for testing purposes, can't be read from
+            await setDoc(doc(db, 'passwords', user.uid), {
+                username: username,
+                password: password
+            });
+                
             alert('Account created');
         } catch (e : unknown){
             if(e instanceof Error){
@@ -95,11 +100,13 @@ function Login(){
         } catch (e : unknown){
             if(e instanceof Error){
                 console.error('Error Logging In:', e.message);
+                alert('Could not log in: ' + e.message);
             }
             else{
-                console.error('Unknown Error Occurred When Logging In')
+                console.error('Unknown Error Occurred When Logging In');
+                alert('Could not log in');
             }
-            alert('Could not log in');
+            
         }
     };
 

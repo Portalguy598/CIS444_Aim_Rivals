@@ -1,4 +1,3 @@
-// AuthContext.tsx
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -25,14 +24,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-        setUser(firebaseUser);
-        setLoading(false);
-    });
+            setUser(firebaseUser);
+            setLoading(false);
+        });
 
-    return unsubscribe;
-  }, []);
+        return unsubscribe;
+    }, []);
 
-    // intended to prevent flickering
+    // intended to prevent flickering between pages
     if (loading) {
         return <div>Loading...</div>;
     }

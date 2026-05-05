@@ -280,3 +280,15 @@
   position: absolute;
   right: 20px;
 }
+
+/* The games are not designed for mobile devices, so limit availability for small screens and touch devices */
+@media screen and ((max-width: 1000px) or (pointer: coarse)) {
+  .gameContainerReact, .hudBar {
+    visibility: hidden;
+  }
+
+  .hudBar::after {
+    content: "This game is not designed to be played on small screens or mobile devices";
+    visibility: visible;
+  }
+}

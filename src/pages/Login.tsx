@@ -11,12 +11,12 @@ function Login(){
     const navigate = useNavigate();
 
     useEffect(() => {
-  document.body.classList.add("login-page");
+        document.body.classList.add("login-page");
 
-  return () => {
-    document.body.classList.remove("login-page");
-  };
-}, []);
+    return () => {
+        document.body.classList.remove("login-page");
+    };
+    }, []);
 
     // for accessing text info
     const userRef = useRef<HTMLInputElement>(null);

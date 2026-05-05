@@ -180,7 +180,6 @@ export class ReusableGameLogic
 		this.targets.current = this.targets.current.filter(target => target.id !== id);
 		this.setTargets(this.targets.current);
 
-		//console.log("dbg: removed target with id " + id);
 	}
 
     purgeTargets()
@@ -229,7 +228,6 @@ export class ReusableGameLogic
 			else
 			{
 				changesMade = true;
-				//console.log("dbg: culled target with id " + target.id);
 			}
 		}
 		
@@ -244,7 +242,6 @@ export class ReusableGameLogic
     {
 		if (this.gameState.current !== GameState.PLAYING) { return; }
 		
-		//console.log("Hit target");
 		this.hits.current += 1;
 		this.setHits(this.hits.current);
 		
@@ -262,8 +259,6 @@ export class ReusableGameLogic
 		
 		this.score.current += Math.ceil(this.BASE_POINTS_ON_HIT * accuracyScale);
 		this.setScore(this.score.current);
-		//console.log(`Updated score to ${this.score.current} with accuracyScale of ${accuracyScale}`);
-
 		this.removeTarget(targetID);
 	}
 
@@ -271,15 +266,12 @@ export class ReusableGameLogic
     {
 		if (this.gameState.current !== GameState.PLAYING) { return; }
 		
-		//console.log('hit onGameClick');
 		this.clicks.current += 1;
 		this.setClicks(this.clicks.current);
 	}
 
     doGameStart()
     {
-		//console.log("Game starting");
-		// if timerTicker !== -1, then it has been assigned an ID through setInterval
 		if (this.timerTicker !== -1)
 		{
 			clearInterval(this.timerTicker)
@@ -295,7 +287,6 @@ export class ReusableGameLogic
 
     doGameReset()
     {
-		//console.log("Game reset");
 		this.timeLeft.current = this.GAME_TIME;
 		this.setTimeLeft(this.timeLeft.current);
 		this.clicks.current = 0;
@@ -312,7 +303,6 @@ export class ReusableGameLogic
 
     doGameEnd()
     {
-		//console.log("Game ended");
 		this.purgeTargets();
 		this.gameState.current = GameState.COMPLETE
 		this.setGameState(this.gameState.current);
@@ -323,7 +313,6 @@ export class ReusableGameLogic
     {
 		if (this.user)
 		{
-			//console.log('made it into submitScore');
 			// get current stored score to compare to the new one
 			const docRef = doc(db, 'users', this.user.uid);
 			const docSnap = await getDoc(docRef);

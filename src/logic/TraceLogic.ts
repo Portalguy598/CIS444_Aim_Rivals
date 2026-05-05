@@ -101,8 +101,6 @@ export class TraceLogic extends ReusableGameLogic
 
         this.score.current += calculatedPoints;
 		this.setScore(this.score.current);
-
-        //console.log(`dbg: added points for hovered target w/ id ${this.hoveredTarget.current.id}. Accuracy scale was ${accuracyScale}`)
     }
 
     moveTargets()
